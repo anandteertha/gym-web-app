@@ -1,0 +1,343 @@
+body{
+	background-color: black;
+	margin: 0px;
+	padding: 0px;
+}
+#header-nav{
+	background-color: #2196F3;
+	border-radius: 0px;
+	border:0px;
+	
+}
+#logo{
+	background-image: url("../gym-images/log.png");
+	background-repeat: none;
+	width: 100px;
+	height: 100px;
+	margin:15px;
+}
+.navbar-brand{
+	position: relative;
+	
+}
+.navbar-brand a:hover, .navbar-brand a:focus{
+	text-decoration: none;
+	
+	}
+.navbar-brand h1{
+	color: #FFC107;
+	text-shadow: 1px 1px 1px #fff;
+}
+
+#nav-list a{
+	text-align: center;
+	margin: 20px;
+}
+#nav-list a:hover{
+	
+	color: black;
+}
+.jumbotron{
+	box-shadow: 0 0 50px #616161; 
+	border:2px solid #3F0C1F;
+	margin: 20px;
+}
+.container{
+	margin-top: 20px;
+}
+h3{
+	text-shadow: 0 0 3px #FF0000;
+	text-transform: uppercase;
+	text-align: center;
+	font-weight: bold;
+	font-size: 2em;
+	margin-bottom: 20px;
+}
+
+@media (min-width: 1200px){
+	.jumbotron{
+		background-image: url("../gym-images/m-1300.jpg");
+		background-repeat: none;
+		height: 628px;
+		background-size: 100% 100%;
+	}
+}
+@media (min-width: 992px) and (max-width: 1199px){
+	.jumbotron{
+		background-image: url("../gym-images/m.jpg");
+		background-repeat: none;
+		height: 628px;
+		background-size: 100% 100%;
+	}
+}
+@media (min-width: 768px) and (max-width: 991px){
+	.jumbotron{
+		background-image: url("../gym-images/m-992.jpg");
+		background-repeat: none;
+		height: 550px;
+		background-size: 100% 100%;
+	}
+	.equip-description{
+		margin-left: 20px;
+	}
+}
+@media (max-width: 767px){
+	.jumbotron{
+		background-image: url("../gym-images/m-768.jpg");
+		background-repeat: none;
+		height: 400px;
+		background-size: 100% 100%;
+	}
+	.col-xs-12{
+		width: 100%;
+	}
+	.equip-tile hr{
+	width: 50%;
+	background-color: #fff;
+	}
+	.equip-title{
+		margin:20px;
+	}
+	.panel-footer section{
+		text-align: center;
+	}
+	.panel-footer section hr{
+		width:50%;
+		background-color: #fff;
+	}
+	.special1{
+		margin-left: auto;
+	}
+}
+#snip{
+	background-color: #FFF9C4;
+	margin: 20px;
+	padding: 20px;
+	border-radius: 10px;	
+}
+.para1{
+	
+	text-align: center;
+	font-style: italic;
+	font-size: 2em;
+	color: #F44336;//#F57C00;
+	font-weight: bold;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 0px;
+  margin: 0px;
+}
+.grid-item {
+  padding: 0px;
+  font-size: 30px;
+  text-align: center;
+}
+.img{
+	font-size: 1.2em;
+}
+.mySlides {
+	
+	box-shadow: 5px 5px 18px #616161;
+	
+}
+img {vertical-align: middle;}
+/* Slideshow container */
+#slideshow-container {
+  max-width: 500px;
+  max-height: 333px;
+  position: relative;
+  padding: 0px;
+  margin-top: 20px;
+  margin-bottom: 70px;
+  margin-right: auto;
+  margin-left:  auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 60%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+/* Position the "next button" to the right */
+.prev{
+	left: 0px;
+	border-radius: 3px 0 0 3px;	
+}
+.next {
+  right: 0px;//130px;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+  text-decoration: none;
+}
+iframe{
+	border:none;
+	box-shadow: 5px 5px 18px #616161;
+}
+.para2{
+	font-weight: bold;
+	font-size: 1.5em;
+	color: #FFC107;
+	text-shadow: 1px 1px 1px #fff;
+	font-style: italic;
+	text-align: center;
+	margin-bottom: 20px;
+}
+#video{
+  max-width: 500px;
+  max-height: 333px;
+  position: relative;
+  padding: 0px;
+  margin-top: 20px;
+  margin-bottom: 70px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.special1{
+	//width: 100%;
+	height: 250px;
+	background-image: url("../gym-images/special.jpg");
+	background-repeat: none;
+	background-size: 100% 100%;
+	margin: 20px;
+	padding: 20px;
+	border-radius: 10px;
+}
+.special2{
+	
+	font-weight: bold;
+	font-size: 2em;
+	color: #F44336;//#F57C00;
+	text-shadow: 1px 1px 1px #fff;
+	font-style: italic;
+	text-align: right;
+}
+#special3{
+	
+	margin-right: 100px;
+	margin-top: 20px;
+}
+#special4{
+	margin-right: 20px;
+}
+.button{
+	background-color: #4CAF50;
+	color: white;
+	text-align: center;
+	border:none;
+	
+	display: inline-block;
+	border-radius: 12px;
+	transition-duration: 0.4s; 
+	
+}
+.button:hover {
+	background-color: black;
+	color: white;
+}
+.button1{
+	background-color: #4CAF50;
+	color: white;
+	text-align: center;
+	border:none;
+	padding: 10px 20px;
+	display: inline-block;
+	border-radius: 12px;
+	position: absolute;
+	left: 79%;
+	margin-top: 10px;
+	transition-duration: 0.4s; 
+}
+.button1:hover {
+	background-color: black;//#e7e7e7;
+	color: white;
+}
+
+.panel-footer{
+	margin-top: 30px;
+	padding-top:35px;
+	padding-bottom: 30px;
+	background-color:#222;
+	border-top:0;
+	color: #fff;
+}
+#copyright{
+	margin-top: 20px;
+}
+#response{
+	font-style: italic;
+}
+#hours>span, #address>span{
+	font-size: 1.5em;
+}
+/* Home page ends*/
+
+/* gym-equipment.html starts */
+.equip-tile{
+	margin: 20px;
+}
+.equip-title{
+	font-weight: bold;
+	font-size: 1.5em;
+	color: #FFC107;//#F44336;//#F57C00;
+	text-shadow: 1px 1px 1px #fff;
+	font-style: italic;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.equip-description{
+	color: white;
+}
+.equip-photo{
+	width: 300px;
+	height: 250px;
+	overflow: hidden;
+	margin: auto;
+	border: 2px solid red;
+}
+.equip-tile hr{
+	width: 50%;
+	background-color: #fff;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+b{
+	color: red;
+}
+
+/* gym-equipment.html ends */
+
+/* gym-login.html starts */
+
+.form-group{
+	color: white;
+	width: 50%;
+	
+	margin-top: 20px;
+	margin-bottom: 20px;	
+	margin-left: auto;
+	margin-right: auto;
+}
+.form-check-inline{
+	color: white;
+	
+}
+
+/* gym-login.html ends */
+
+
