@@ -6,7 +6,7 @@ var app = express();
 var http = require('http').Server(app);
 var sha256 = require('sha256');
 var path = require('path');
-
+var nodemailer = require('nodemailer');
 app.use(session({
 	secret: 'secret',
 	resave: true,
@@ -190,6 +190,29 @@ app.get('/gym-js/jquery-3.5.1.min.js',function(request,response){
   response.sendFile(path.join(__dirname+'/gym-js'+'/jquery-3.5.1.min.js'));
 });
 
+app.get('/gym-css/loginform.css',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-css'+'/loginform.css'));
+});
+
+app.get('/gym-css/userOption.css',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-css'+'/userOption.css'));
+});
+
+app.get('/gym-images/lock.png',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/lock.png'));
+});
+
+app.get('/gym-images/user.png',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/user.png'));
+});
+
+app.get('/gym-snippets/loginform.html',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-snippets'+'/loginform.html'));
+});
+
+app.get('/gym-snippets/userOptions.html',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-snippets'+'/userOptions.html'));
+});
 
 //post methods here....
 
@@ -215,6 +238,28 @@ app.post('/register',function(request,response){
         return;
       }
       else{
+				var transporter = nodemailer.createTransport({
+					  service: 'gmail',
+					  auth: {
+					    user: 'goldgym003@gmail.com',
+					    pass: 'gold-gym-003-@@'
+					  }
+					});
+
+					var mailOptions = {
+					  from: 'goldgym003@gmail.com',
+					  to: email,
+					  subject: 'GOLD GYM',
+					  text: 'Thankyou! for registering to our GYM, we hope get fit and get better. Looking forward to seeing you everyday. You can checkout some of our programs listed below as links. Once again, Thankyou! :)'
+					};
+
+					transporter.sendMail(mailOptions, function(error, info){
+					  if (error) {
+					    console.log(error);
+					  } else {
+					    console.log('Email sent: ' + info.response);
+					  }
+					});
         response.redirect('/');
       }
     });
@@ -224,6 +269,22 @@ app.post('/register',function(request,response){
   }
 });
 
+app.post('/login',function(request,response){
+	var email = request.body.email;
+	var pswd = request.body.pswd;
+	if(email && pswd){
+		connection.query('SELECT pswd FROM gym_candidate WHERE email = ?',[email],function(errors,results,fields){
+			console.log('results = ',results);
+			if(results[0].pswd == pswd){
+				console.log('successfully logged in!');
+				response.redirect('/');
+			}
+			else{
+				response.send('sorryy but the pswd was wrong!');
+			}
+		});
+	}
+});
 
 //http listen on port 4000...
 
