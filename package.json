@@ -2,9 +2,10 @@
   "name": "gym-web-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,6 +16,11 @@
   "bugs": {
     "url": "https://github.com/anandteertha/gym-web-app/issues"
   },
+
+  "engines": {
+    "node": "12.18.1"
+  },
+
   "homepage": "https://github.com/anandteertha/gym-web-app#readme",
   "dependencies": {
     "body-parser": "^1.19.0",

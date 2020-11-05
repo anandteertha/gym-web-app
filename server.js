@@ -1,3 +1,4 @@
+var PORT = process.env.PORT || 5000;
 var mysql = require('mysql');
 var express = require('express');
 var session = require('express-session');
@@ -288,6 +289,6 @@ app.post('/login',function(request,response){
 
 //http listen on port 4000...
 
-http.listen(4000,function(){
+http.listen(PORT,function(){
   console.log('listening on port 4000');
 });
