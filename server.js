@@ -20,7 +20,7 @@ app.use(express.static('/'));
 var db_config = {
 	host     : 'localhost',
 	user     : 'root',
-	password : 'anantdf123099#qcvbnAS!!++#',
+	password : 'hello world',
 	database : 'wdl'
 };
 var connection = mysql.createPool(db_config);
