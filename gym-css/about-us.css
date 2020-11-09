@@ -1,0 +1,155 @@
+
+.about h2{
+	font-weight: bold;
+	font-size: 1.5em;
+	text-shadow: 1px 1px 1px #fff;
+	font-style: italic;
+	text-align: center;
+	padding: 110px;
+	
+	/*position: absolute;
+	top: 45%;
+	left: 25%;*/
+}
+.about p{
+	color: white;
+}
+.bg-text1{
+	font-size: 3.5em;
+	border:3px solid white;
+	background-color: rgba(0,0,0, 0.4); 
+  	color: white;//#FFC107;
+  	//text-shadow: 1px 1px 1px #fff;
+  	position: absolute;
+  	top: 70%;
+  	left: 50%;
+  	width: 50%;
+  	padding: 20px;
+
+  	text-align: center;
+  	transform: translate(-50%, -50%);
+  	
+}
+.bg-text2{
+	font-size: 1.7em;
+	font-style: italic;
+	color: #FFC107;
+}
+@media (min-width: 1200px){
+	.jumbotron{
+		background-image: url("../gym-images/aboutus-1300.jpg");
+		background-repeat: none;
+		height: 628px;
+		background-size: 100% 100%;
+		filter: blur(8px);
+	}
+}
+@media (min-width: 992px) and (max-width: 1199px){
+	.jumbotron{
+		background-image: url("../gym-images/aboutus-1200.jpg");
+		background-repeat: none;
+		height: 628px;
+		background-size: 100% 100%;
+		filter: blur(8px);
+	}
+}
+@media (min-width: 768px) and (max-width: 991px){
+	.jumbotron{
+		background-image: url("../gym-images/aboutus-992.jpg");
+		background-repeat: none;
+		height: 550px;
+		background-size: 100% 100%;
+		filter: blur(8px);
+	}
+	/*.flip-box{
+		margin: 20px;
+	}*/
+}
+@media (max-width: 767px){
+	.jumbotron{
+		background-image: url("../gym-images/aboutus-768.jpg");
+		background-repeat: none;
+		height: 400px;
+		background-size: 100% 100%;
+		filter: blur(8px);
+	}
+	.bg-text1{
+		font-size: 2em;
+		
+	}
+	.bg-text2{
+		font-size: 1.5em;
+		
+	}
+}
+
+.flip-box{
+	background-color: transparent;
+  	width: 420px;
+  	height: 300px;
+  	border-radius: 15px;
+  	margin-right: auto;
+  	margin-left: auto;
+  	margin-top: 20px;
+  	margin-bottom: 20px;
+
+}
+.flip-box-inner{
+	position: relative;
+  	width: 100%;
+  	height: 100%;
+  	text-align: center;
+  	transition: transform 0.8s;
+  	transform-style: preserve-3d;
+}
+.flip-box:hover .flip-box-inner {
+  transform: rotateY(180deg);
+}
+.flip-box-front, .flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+
+}
+.flip-box-front{
+	background-image: url("../gym-images/aboutus-1.jpg");
+	background-repeat: no-repeat;
+	filter: grayscale(100%);
+	width: 100%;
+  	height: 100%;
+	border-radius: 15px;
+	margin: auto;
+	padding: 20px;
+ 	background-color: #bbb;
+  	font-weight: bold;
+  	font-size: 1.2em;
+  	box-shadow: 5px 10px 18px #888888;
+}
+
+.flip-box-back{
+	background-image: url("../gym-images/aboutus-2.jpg");
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	border-radius: 15px;
+	padding: 20px;
+  	transform: rotateY(180deg);
+  	font-size: 1em;
+
+}
+
+.box{
+	background-image: url("../gym-images/aboutus-3.jpg");
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255,255,255, 0.1); 
+	border-radius: 15px;
+	margin: auto;
+	padding: 20px;
+	filter: grayscale(100%);
+}
+.panel-footer{
+	margin-top: 0px;
+}
