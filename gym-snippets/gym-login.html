@@ -8,7 +8,20 @@
 	<link rel="stylesheet" href="../gym-css/bootstrap.min.css">
 	<link rel="stylesheet" href="../gym-css/gym-css.css">
 	<link rel="icon" href='/gym-images/log.png'>
+	<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 </head>
+<style media="screen">
+	#stripeTokenId{
+		display: hidden;
+		visibility: none;
+	}
+	#containerPayment{
+		display: hidden;
+		visibility: none;
+	}
+</style>
 <body>
 	<header>
 		<nav id="header-nav" class="navbar navbar-expand-lg bg-dark navbar-dark ">
@@ -97,17 +110,59 @@
 				<label for="tel">Mobile Number :-</label>
 				<input type="text" name="tel" id="tel" class="form-control" placeholder="Enter your Number">
 			</div>
+			<div class="form-group">
+					<label for="plans">Plans:- </label><br>
+					<label >online:- </label>
+			    <input name="plans"class="form-control"type="checkbox" id="inlineCheckbox1"  value="online">
+					<label >offline:- </label>
+			    <input name="plans"class="form-control"  type="checkbox" id="inlineCheckbox1" value="offline">
+					<label >Trainer:- </label>
+			    <input name="plans"class="form-control"   type="checkbox" id="inlineCheckbox1" value="trainer">
 
+			</div>
+			<input hidden type="text" name="stripeTokenId" value="">
 			<div class="form-group">
 				<a href="#">
-				<button style="margin-top: 10px;" type="submit" class="btn btn-primary">Submit</button>
+				<button style="margin-top: 10px;" type="submit" onclick="encrypt();"class="btn btn-primary" id="checkout-button">Submit</button>
 				</a>
 			</div>
 			</div>
 		</form>
 
 	</div>
+	<script type="text/javascript">
+		function encrypt(){
 
+			var fname = document.getElementById('fname');
+			var lname = document.getElementById('lname');
+			var pswd = document.getElementById('pswd');
+			var email = document.getElementById('email');
+			var num = document.getElementById('tel');
+			/*var stripeHandler = StripeCheckout.configure({
+				key: 'pk_test_51HlziYD5Z2NiGnWqttUGOL6aKI2UsJGbtugSPS8FVTsi1xff8AlL6MyTE5i2N8wRYIuYpSuTzyuzxND2D8X64EEd00RUkYm19U',
+				locale: 'en',
+				token: function(token){
+					var stripeTokenId = document.getElementById('stripeTokenId');
+					stripeTokenId.value = token.id;
+					console.log('stripeTokenId: ',token.id);
+					alert('inside token');
+				}
+			});*/
+			var stripe = Stripe('pk_test_51HlziYD5Z2NiGnWqttUGOL6aKI2UsJGbtugSPS8FVTsi1xff8AlL6MyTE5i2N8wRYIuYpSuTzyuzxND2D8X64EEd00RUkYm19U');
+
+			fname.value = CryptoJS.AES.encrypt(fname.value,'form');
+			lname.value = CryptoJS.AES.encrypt(lname.value,'form');
+			pswd.value = CryptoJS.AES.encrypt(pswd.value,'form');
+			email.value = CryptoJS.AES.encrypt(email.value,'form');
+			var main_content = document.getElementById('main-content');
+			main_content.style.display = 'hidden';
+			var containerPayment = document.getElementById('containerPayment');
+			containerPayment.style.display = 'block';
+			//num.value = CryptoJS.AES.encrypt(num.value.toString(),'form');
+			//fname.style.display = 'hidden';
+			//window.location = 'http://localhost:5000/gym-snippets/checkout.ejs'
+		}
+	</script>
 	<script src="../gym-js/jquery-3.5.1.min.js"></script>
 	<script src="../gym-js/bootstrap.min.js"></script>
 	<script src=""></script>

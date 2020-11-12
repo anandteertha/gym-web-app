@@ -11,6 +11,61 @@
 	<link rel="icon" href='/gym-images/log.png'>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 	<script src="/gym-js/auth.js" charset="utf-8"></script>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style media="screen">
+		#iconMoF{
+			width: 150px;
+			height: 120px;
+			margin-top: 20px;
+			background-size: 100px;
+			background-repeat: no-repeat;
+			color: white;
+			text-align: center;
+			color: gold;
+			text-shadow: 0.5px 0.5px white;
+		}
+		#imgID{
+			margin-top: 15px;
+			border-radius: 50%;
+			text-align: center;
+			cursor: pointer;
+			border: 1px solid gold;
+		}
+		#logoutBtn{
+			width: 150px;
+			height: 40px;
+			background-color: white;
+			color: black;
+			cursor: pointer;
+			padding: 5px;
+			float: right;
+		}
+		#logoutBtn:hover{
+			border: 1px solid gold;
+			background-color: gold;
+		}
+		#logoutBtn:active{
+			transform: translateY(4px);
+			opacity: 0.4;
+		}
+		#invoice{
+			width: 150px;
+			height: 40px;
+			background-color: white;
+			color: black;
+			cursor: pointer;
+			padding: 5px;
+			float: right;
+		}
+		#invoice:hover{
+			border: 1px solid gold;
+			background-color: gold;
+		}
+		#invoice:active{
+			transform: translateY(4px);
+			opacity: 0.4;
+		}
+	</style>
 </head>
 
 <body>
@@ -48,24 +103,23 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="gym-snippets/userOptions.html">Plans</a>
+            <a class="nav-link" href="gym-images/userOptions.html">Plans</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="gym-snippets/userOptions.html">
-							<button class="button">Sign In</button>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="gym-snippets/gym-login.html">
-							<button class="button">Sign Up</button>
-						</a>
-					</li>
+					<div onclick="displayOptions();" class="w3-dropdown-hover w3-right" id='iconMoF'>
+						<script type="text/javascript">
+							document.getElementById("iconMoF").innerHTML += "<%= email %>" +'<br><small>plans: ' + "<%=mode%>" +'</small><br>';
+						</script>
+					</div>
+					<img onclick="displayOptions();" style="float='right'" width="30px" height="50px" id="imgID"  alt="">
+					<script type="text/javascript">
+						document.getElementById('imgID').src = 'gym-images/'+ "<%= gender %>" +'.jpg';
+					</script>
 				</ul>
 			</div>
 		</nav>
 	</header>
 
-	<div id="main-content">
+	<div id="main-content" onclick="undisplayOptions();">
 
 		<div class="jumbotron jumbotron-fluid img-fluid">
 			<!-- 			<img class="img-fluid max-width d-sm-block d-md-none" src="gym-images/m.jpg" alt="main image">  -->
@@ -120,10 +174,10 @@
 		<div class="special1">
 			<div class=" special2">
 				<!-- <p>Register for<br>Online Program</p> -->
-				<div id="special3">Register For</div>
-				<div id="special4">Online Program</div>
+				<!--<div id="special3">Register For</div>-->
+				<div id="special4">Log Out..</div>
 			</div>
-			<button class="button1">Sign Up</button>
+			<button class="button1" onclick="logout();">Log Out</button>
 		</div>
 	</div>
 
@@ -180,6 +234,42 @@
 
 			slides[slideIndex - 1].style.display = "block";
 
+		}
+		var clicked = false;
+		function displayOptions(){
+			if(clicked == false){
+				var logOut = document.createElement('div');
+				var invoice = document.createElement('div');
+				var iconMoF = document.getElementById('iconMoF');
+				invoice.setAttribute('id','invoice');
+				invoice.setAttribute('onclick','displayInvoice()');
+				invoice.innerHTML = 'Invoice..';
+				iconMoF.appendChild(invoice);
+				logOut.setAttribute('id','logoutBtn');
+				logOut.setAttribute('onclick','logout()');
+				logOut.innerHTML = 'Log Out..';
+				iconMoF.appendChild(logOut);
+				clicked = true;
+			}
+		}
+		function undisplayOptions(){
+			var logOut = document.getElementById('logoutBtn');
+			logOut.style.display = 'none';
+			logOut.style.visibility = 'hidden';
+		}
+		function logout(){
+			//alert('inside');
+			localStorage.username = undefined;
+			localStorage.email = undefined;
+			localStorage.mode = undefined;
+			window.location = 'http://localhost:5000/gym-snippets/loginform.html';
+		}
+		function displayInvoice(){
+			alert(window.location);
+			var url = window.location.toString();
+			url = url.replace('index','invoice');
+			alert(url);
+			window.location = url;
 		}
 	</script>
 </body>

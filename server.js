@@ -8,6 +8,14 @@ var http = require('http').Server(app);
 var sha256 = require('sha256');
 var path = require('path');
 var nodemailer = require('nodemailer');
+var fs = require('fs');
+var CryptoJS = require('crypto-js');
+
+
+
+const stripePublicKey = 'pk_test_51HlziYD5Z2NiGnWqttUGOL6aKI2UsJGbtugSPS8FVTsi1xff8AlL6MyTE5i2N8wRYIuYpSuTzyuzxND2D8X64EEd00RUkYm19U';
+const stripeSecretKey = 'sk_test_51HlziYD5Z2NiGnWqDAfTZYI4qKDiZ3YhqjrWIHllkH6eR3N3fWcYof05IkEjW3o97M5xcDVrY1n2gwH0kflsJDEc00R2wGwf3K';
+var stripe = require('stripe')(stripeSecretKey);
 app.use(session({
 	secret: 'secret',
 	resave: true,
@@ -17,10 +25,14 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(express.static('/'));
 
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+
 var db_config = {
 	host     : 'localhost',
 	user     : 'root',
-	password : 'hello world',
+	password : 'anantdf123099#qcvbnAS!!++#',
 	database : 'wdl'
 };
 var connection = mysql.createPool(db_config);
@@ -215,8 +227,327 @@ app.get('/gym-snippets/userOptions.html',function(request,response){
 	response.sendFile(path.join(__dirname+'/gym-snippets'+'/userOptions.html'));
 });
 
+app.get('/gym-snippets/about-us.html',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-snippets'+'/about-us.html'));
+});
+
+app.get('/gym-images/aboutus-1.jpg',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/aboutus-1.jpg'));
+});
+
+app.get('/gym-images/aboutus-2.jpg',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/aboutus-2.jpg'));
+});
+
+app.get('/gym-images/aboutus-3.jpg',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/aboutus-3.jpg'));
+});
+
+app.get('/gym-images/aboutus-768.jpg',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/aboutus-768.jpg'));
+});
+
+app.get('/gym-images/aboutus-992.jpg',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/aboutus-992.jpg'));
+});
+
+app.get('/gym-images/aboutus-1200.jpg',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/aboutus-1200.jpg'));
+});
+
+app.get('/gym-images/aboutus-1300.jpg',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-images'+'/aboutus-1300.jpg'));
+});
+
+app.get('/gym-css/about-us.css',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-css'+'/about-us.css'));
+});
+
+app.get('/gym-js/auth.js',function(request,response){
+	response.sendFile(path.join(__dirname+'/gym-js'+'/auth.js'));
+});
+
+app.get('/gym-snippets/userOptions.html',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/userOptions.html'));
+});
+
+app.get('/gym-snippets/checkout.ejs',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/checkout.ejs'));
+});
+
+app.get('/gym-images/male.jpg',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/male.jpg'));
+});
+
+app.get('/gym-images/female.jpg',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/female.jpg'));
+});
+
+app.get('/gym-images/gender.jpg',function(req,res){
+	console.log('global.gender_ = ',global.gender_);
+	if(global.gender_ == 'male'){
+		res.sendFile(path.join(__dirname+'/gym-images'+'/male.jpg'));
+	}
+	else{
+		res.sendFile(path.join(__dirname+'/gym-images'+'/female.jpg'));
+	}
+});
+
+app.get('/dimension.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/views'+'/dimension.png'));
+});
+
+app.get('/logo.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/log.png'));
+});
+
+app.get('/style.css',function(req,res){
+	res.sendFile(path.join(__dirname+'/views'+'/style.css'));
+});
+
+app.get('/invoice',function(req,res){
+	var url_invoice = req.url;
+	console.log('url_invoice = ',url_invoice);
+	url_invoice = url_invoice.toString();
+	if(url_invoice.split('?').length > 1){
+		var params = url_invoice.split('?')[1].split('&');
+		for(var i=0;i<params.length;i++){
+			var key = params[i].split('=')[0];
+			var value = params[i].split('=')[1];
+			if(key == 'useremail'){
+				console.log('inside man!');
+				var email = params[i].split('=')[1];
+				console.log('email before decrypt:',email);
+				email += '==';
+				email = decodeURIComponent(email);
+				console.log('after decode email = ',email);
+				email = CryptoJS.AES.decrypt(email,'secret pswd').toString(CryptoJS.enc.Utf8);
+				console.log('email after decrypt: ',email);
+				break;
+			}
+		}
+
+		console.log('email invoice = ',email);
+		connection.query('select plans,totalPayment, payment_done from gym_candidate where email=?',[email],function(err,results,fields){
+
+			if(err){
+				console.log('error while selecting fro  db');
+				console.error(err);
+			}
+			else{
+				var plans = results[0].plans.split(',');
+				console.log(results);
+				res.render('invoice.ejs',{
+					plans: plans,
+					totalPayment: results[0].totalPayment,
+					payment_done: results[0].payment_done
+				});
+			}
+
+		});
+	}
+	console.log('inside get');
+});
+
+app.get('/index',function(req,res){
+	var emailStr = new Array();
+	var u = req.url;
+	var name;
+	var gender;
+	var mode = '';
+	if(u.split('?').length >1){
+		var params = u.split('?')[1].split('&');
+		for(var i=0;i<params.length;i++){
+			var key = params[i].split('=')[0];
+			var value = params[i].split('=')[1];
+			if(key == 'username'){
+				console.log('inside man!');
+				name = params[i].split('=')[1];
+				name = decodeURIComponent(name);
+				//console.log('before email = ',email);
+				name = CryptoJS.AES.decrypt(name,'secret pswd').toString(CryptoJS.enc.Utf8);
+				console.log(name);
+			}
+			else if (key == 'gender') {
+				gender = value;
+				gender = decodeURIComponent(value);
+			}
+			else if(value == 'online'){
+				mode += 'online ';
+			}
+			else if(value == 'offline'){
+				mode += 'offline ';
+			}
+			else if(value == 'trainer'){
+				mode += 'trainer';
+			}
+		}
+	}
+	console.log('ender ke time ka gender? = ',global.gender_);
+	res.render('index',{
+			key: 'hello world',
+			gender: gender,
+			email: name,
+			mode: mode
+		});
+});
+
+global.totalAmount = 2500;
+global.plans = [];
+app.get('/checkout', function(req, res){
+	console.log('url: ',req.url);
+
+	var urls = req.url;
+	var queryString = new Array();
+	var description = '';
+	global.totalAmount = 2500;
+	if(queryString.length == 0){
+		if(urls.split('?').length > 1) {
+			var params = urls.split('?')[1].split('&');
+			//console.log('params: ',urls.split('?')[1]);
+			for(var i=0;i<params.length;i++){
+				var key = params[i].split('=')[0];
+				var value = params[i].split('=')[1];
+				console.log('key: ',key);
+				console.log('value: ',value);
+				var tmp = value;
+				if( key == 'useremail'){
+					continue;
+				}
+				else{
+					if(value == 'online'){
+						description += '+ online ';
+						global.totalAmount += 500000;
+						global.plans.push(tmp);
+					}
+					else if( value == 'offline'){
+						description += '+ offline ';
+						global.totalAmount += 1000000;
+						global.plans.push(tmp);
+					}
+					else{
+						description += '+ trainer ';
+						global.totalAmount += 400000;
+						global.plans.push(tmp);
+					}
+				}
+			}
+		}
+	}
+	description = description.replace('+',' ');
+	res.render('checkout', {
+	key: stripePublicKey,
+	amount: global.totalAmount,
+	description: description
+	})
+
+});
+
 //post methods here....
 
+app.post('/payment', function(req, res){
+
+	// Moreover you can take more details from user
+	// like Address, Name, etc from form
+	amount = req.body;
+	console.log('totalAmount1: ',global.amount);
+	stripe.customers.create({
+		email: req.body.stripeEmail,
+		source: req.body.stripeToken,
+		address: {
+			line1: 'TC 9/4 Old MES colony',
+			postal_code: '110092',
+			city: 'New Delhi',
+			state: 'Delhi',
+			country: 'India',
+		}
+	})
+	.then((customer) => {
+		amount = req.body.amount;
+		console.log('totalAmount bhai: ',amount);
+		return stripe.charges.create({
+			amount: global.totalAmount,	 // Charing Rs 25
+			description: '',
+			currency: 'inr',
+			customer: customer.id
+		});
+	})
+	.then((charge) => {
+		console.log('charge: ',req.body.stripeEmail);
+		console.log('plans: ',global.plans);
+		var plansStr = global.plans.toString();
+		connection.query('update gym_candidate set plans = ?, totalPayment = ?,payment_done = "true" where email=? ',[plansStr,global.totalAmount,req.body.stripeEmail],function(err,result,fields){
+			if(err){
+				console.log(err);
+				console.log('error happened while updating..');
+			}
+			else{
+				console.log('successfull in updating the database...');
+			}
+		});
+		//res.send("hello world") // If no error occurs
+		var nameENC;
+		connection.query('select name,gender from gym_candidate where email=?',[req.body.stripeEmail],function(err,results,fields){
+			if(err){
+				console.log('error while selecting..');
+				console.log(err);
+			}
+			else{
+				nameENC = results[0].name;
+				var name = nameENC;
+				gender = results[0].gender;
+				console.log('name: ',nameENC);
+				nameENC = CryptoJS.AES.encrypt(nameENC,'secret pswd');
+				var redirectURL = 'http://localhost:5000/index?username=' + encodeURIComponent(nameENC) + '&gender=' + encodeURIComponent(gender) + '&useremail=' + encodeURIComponent(CryptoJS.AES.encrypt(req.body.stripeEmail,'secret pswd'));
+				for(var i=0;i<global.plans.length;i++){
+					redirectURL += '&' + i + '=' + global.plans[i];
+				}
+				global.plans = [];
+				res.redirect(redirectURL);
+				var url = redirectURL.toString().replace('index','invoice') + '&useremail=' + encodeURIComponent(CryptoJS.AES.encrypt(req.body.stripeEmail,'secret pswd'));
+				var transporter = nodemailer.createTransport({
+					  service: 'gmail',
+					  auth: {
+					    user: 'goldgym003@gmail.com',
+					    pass: 'gold-gym-003-@@'
+					  }
+					});
+
+					var mailOptions = {
+					  from: 'goldgym003@gmail.com',
+					  to: req.body.stripeEmail,
+					  subject: 'Gold Gym',
+					  text: 'Thankyou! ' + name + ' '+  ' Your payment was recieved successfully!! You can find the link to your invoice below.'
+						+ '\n'
+						+ '\n'
+						+ '\n' + 'LINK to the INVOICE..'
+						+ '\n'
+						+ '\n'
+						+ '\n'
+						+ '\n'+ url
+					};
+
+					transporter.sendMail(mailOptions, function(error, info){
+					  if (error) {
+					    console.log(error);
+					  } else {
+					    console.log('Email sent: ' + info.response);
+					  }
+					});
+
+
+
+				}
+		});
+})
+	.catch((err) => {
+		console.log(err);
+		res.send('err')	 // If some error occurs
+	});
+})
+
+
+global.idNow = '';
 app.post('/register',function(request,response){
   var name = request.body.fname;
   var pswd = request.body.pswd;
@@ -224,14 +555,26 @@ app.post('/register',function(request,response){
   var gender = request.body.optradio;
   var email = request.body.email;
   var number = request.body.tel;
+	var plan =request.body.plans;
+	console.log('plans:- ',plan);
+	name = CryptoJS.AES.decrypt(name,'form');
+	l_name = CryptoJS.AES.decrypt(l_name,'form');
+	email = CryptoJS.AES.decrypt(email,'form');
+	//number = CryptoJS.AES.decrypt(number,'form').toString(CryptoJS.enc.Utf8);
+	//number = Number(number);
   var tmp = {
-    name: name,
+    name: name.toString(CryptoJS.enc.Utf8),
     pswd: pswd,
-    l_name: l_name,
+    l_name: l_name.toString(CryptoJS.enc.Utf8),
     gender: gender,
-    email: email,
-    number: number
+    email: email.toString(CryptoJS.enc.Utf8),
+		number: Number(number),
+		payment_done: 'false'
   };
+	global.gender_ = gender;
+	//console.log('stripe.charges: ',stripe.charges);
+
+	console.log('tmp recieved is: ',tmp);
   if(email && pswd && number){
     connection.query('INSERT INTO gym_candidate SET ?',tmp,function(errors,results,fields){
       if(errors){
@@ -246,12 +589,82 @@ app.post('/register',function(request,response){
 					    pass: 'gold-gym-003-@@'
 					  }
 					});
+					var onlineProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+					var offlineProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+					var trainerProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+					var encodedEmail = CryptoJS.AES.encrypt(email, "secret pswd");
 
+					var decrypted = CryptoJS.AES.decrypt(encodedEmail, "secret pswd");
+
+					var url = 'http://localhost:5000/checkout?useremail='+ encodeURIComponent(encodedEmail);
+					if(Array.isArray(plan) == false){
+						url += '&' + 0 + '=' + encodeURIComponent(plan);
+					}
+					else{
+						for(var i=0;i<plan.length;i++){
+							url +=  '&' + i + '=' + encodeURIComponent(plan[i]);
+						}
+					}
+					console.log('url now is: ',url);
+					response.redirect(url);
+					var pathOnlineProgram = '/gym-web-app' + '/gym-images' + '/m.jpg';
+					var pathLogo ='/gym-web-app' + '/gym-images' + '/log.png';
+					console.log('pathogo: ',pathLogo);
+					var emailBody = ''
+					fs.readFile(pathOnlineProgram,function(error,data){
+						if(error){
+							console.log('some error happened..');
+						}
+						else{
+							request.session.image1 = data;
+						}
+					});
+					fs.readFile(pathLogo,function(error,data){
+						if(error){
+							console.log('some error happened..');
+						}
+						else{
+							request.session.image2 = data;
+						}
+					});
 					var mailOptions = {
 					  from: 'goldgym003@gmail.com',
-					  to: email,
+					  to: email.toString(CryptoJS.enc.Utf8),
 					  subject: 'GOLD GYM',
-					  text: 'Thankyou! for registering to our GYM, we hope get fit and get better. Looking forward to seeing you everyday. You can checkout some of our programs listed below as links. Once again, Thankyou! :)'
+					  text: 'Thankyou! ' + name + ' '+ l_name + ' for registering to our GYM, we hope get fit and get better. Looking forward to seeing you everyday.'
+						+ '\n'
+						+ '\n'
+						+ '\nYou can checkout some of our programs listed below as links. Once again, Thankyou! :)'
+						+ '\n'
+						+ '\n'
+						+ '\n 1) online program - '+ onlineProgram
+						+ '\n'
+						+ '\n'
+						+ '\n 2) offline program - '+ offlineProgram
+						+ '\n'
+						+ '\n'
+						+ '\n 3) trainer program - '+ trainerProgram
+						+ '\n'
+						+ '\n'
+						+ '\n',
+						attachments: [
+						{
+							filename: 'm.jpg' ,
+							contentType:  'image/jpg',
+		          path: pathOnlineProgram
+	      		},
+						{
+							filename: 'log.png' ,
+							contentType:  'image/png',
+		          path: pathLogo
+	      		},
+						{
+							filename: 'aboutus-1300.jpg' ,
+							contentType:  'image/png',
+		          path: '/gym-web-app' + '/gym-images' + '/aboutus-1300.jpg'
+						}
+
+						]
 					};
 
 					transporter.sendMail(mailOptions, function(error, info){
@@ -261,7 +674,7 @@ app.post('/register',function(request,response){
 					    console.log('Email sent: ' + info.response);
 					  }
 					});
-        response.redirect('/');
+
       }
     });
   }
@@ -273,12 +686,32 @@ app.post('/register',function(request,response){
 app.post('/login',function(request,response){
 	var email = request.body.email;
 	var pswd = request.body.pswd;
+	console.log('email: ',email);
+	console.log('pswd: ',pswd);
+	email = CryptoJS.AES.decrypt(email,'form').toString(CryptoJS.enc.Utf8);
+	pswd = CryptoJS.AES.decrypt(pswd,'form').toString(CryptoJS.enc.Utf8);
+	console.log('email: ',email);
+	console.log('pswd: ',pswd);
 	if(email && pswd){
-		connection.query('SELECT pswd FROM gym_candidate WHERE email = ?',[email],function(errors,results,fields){
+		connection.query('SELECT name,pswd,gender,plans FROM gym_candidate WHERE email = ?',[email],function(errors,results,fields){
 			console.log('results = ',results);
-			if(results[0].pswd == pswd){
+			if(CryptoJS.AES.decrypt(results[0].pswd,'form').toString(CryptoJS.enc.Utf8) == pswd){
 				console.log('successfully logged in!');
-				response.redirect('/');
+				email = CryptoJS.AES.encrypt(email,'secret pswd');
+				var username = CryptoJS.AES.encrypt(results[0].name,'secret pswd');
+				var plans = results[0].plans.split(',');
+				var url_login = '/index?useremail='+encodeURIComponent(email) +
+				'&username=' + encodeURIComponent(username) +
+				'&gender=' + encodeURIComponent(results[0].gender);
+				if(Array.isArray(plans) ==false){
+					url_login += '&0' + encodeURIComponent(plans);
+				}
+				else{
+					for(var i=0;i<plans.length;i++){
+						url_login += '&' + i + '=' + encodeURIComponent(plans[i]);
+					}
+				}
+				response.redirect(url_login);
 			}
 			else{
 				response.send('sorryy but the pswd was wrong!');

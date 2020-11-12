@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>GOLD GYM</title>
+    <link rel="stylesheet" href="style.css" media="all" />
+    <link rel="icon" href='../gym-images/log.png'>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  </head>
+  <body>
+    <header class="clearfix">
+      <div id="logo">
+        <img src="logo.png">
+      </div>
+      <h1>INVOICE GOLD GYM MEMBERSHIP</h1>
+      <div id="company" class="clearfix">
+        <div>Gold Gym</div>
+        <div>455 Foggy Heights,<br /> AZ 85004, US</div>
+        <div>(602) 519-0450</div>
+        <div><a href="mailto:goldgym003@gmail.com">goldgym003@gmail.com</a></div>
+      </div>
+      <div id="project">
+
+        <!--<div><span>PROJECT</span> Website development</div>-->
+
+        <div><span>CLIENT</span><b><span id="userID"></span></b></div>
+        <div><span>EMAIL</span> <a href="mailto:john@example.com"><b><span id="emailID"></span></b></a></div>
+        <!--<div><span>DUE DATE</span> September 17, 2015</div>-->
+
+        <script type="text/javascript">
+          var userID = document.getElementById('userID');
+          userID.innerHTML = CryptoJS.AES.decrypt(localStorage.username,'secret pswd').toString(CryptoJS.enc.Utf8);
+          var emailID = document.getElementById('emailID');
+          emailID.innerHTML = CryptoJS.AES.decrypt(localStorage.email,'secret pswd').toString(CryptoJS.enc.Utf8);
+        </script>
+
+      </div>
+    </header>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th class="service">PLAN</th>
+            <th>PRICE</th>
+            <!--<th>QTY</th>-->
+            <th>TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% if(Array.isArray(plans) == true) { %>
+            <% for(var i=0;i<plans.length;i++) { %>
+              <tr>
+                <td class="service"><%= plans[i] %></td>
+                <% if(plans[i] == 'online') { %>
+                  <td class="unit">5,000 Rs</td>
+                  <td class="total">5000 Rs</td>
+                <% } %>
+                <% if(plans[i] == 'offline') { %>
+                  <td class="unit">10,000 Rs</td>
+                  <td class="total">10,000 Rs</td>
+                <% } %>
+                <% if(plans[i] == 'trainer') { %>
+                  <td class="unit">4,000 Rs</td>
+                  <td class="total">4,000 Rs</td>
+                <% } %>
+              </tr>
+            <% } %>
+          <% } %>
+
+          <% if(Array.isArray(plans) == false) { %>
+            <tr>
+              <td class="service"><%= plans %></td>
+              <% if(plans == 'online') { %>
+                <td class="unit">5,000 Rs</td>
+                <td class="total">5000 Rs</td>
+              <% } %>
+              <% if(plans == 'offline') { %>
+                <td class="unit">10,000 Rs</td>
+                <td class="total">10,000 Rs</td>
+              <% } %>
+              <% if(plans == 'trainer') { %>
+                <td class="unit">4,000 Rs</td>
+                <td class="total">4,000 Rs</td>
+              <% } %>
+            </tr>
+          <% } %>
+
+          <tr>
+            <td colspan="2">SUBTOTAL</td>
+
+            <td class="total"><%=totalPayment/100 %> Rs</td>
+
+
+          </tr>
+          <tr>
+            <td colspan="2" class="grand total">GRAND TOTAL</td>
+            <td class="grand total"><%=totalPayment/100%> Rs </td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">25 Rs gateway charges are being applied..</div>
+      </div>
+      <br>
+      <br>
+      <center><button type="button" id="print" name="button" onclick="print1()">Print Invoice..</button></center>
+    </main>
+    <footer>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </footer>
+    <script type="text/javascript">
+      function print1(){
+        document.getElementById('print').style.visibility = 'hidden';
+        window.print();
+        document.getElementById('print').style.visibility = 'visible';
+      }
+    </script>
+  </body>
+</html>

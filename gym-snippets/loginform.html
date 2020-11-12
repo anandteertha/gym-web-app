@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="icon" href='/gym-images/log.png'>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="/gym-js/auth.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -18,16 +20,16 @@
                 <h2>Login</h2>
                 <form action="/login" method="post">
                     <div class="inputBx">
-                        <input type="text" placeholder="Email" name='email'>
+                        <input type="text" id="logEmail" placeholder="Email" name='email'>
                         <img src="../gym-images/user.png" alt="">
                     </div>
                     <div class="inputBx">
-                        <input type="password" placeholder="Password" name='pswd'>
+                        <input type="password" id="logPswd" placeholder="Password" name='pswd'>
                         <img src="../gym-images/lock.png" alt="">
                     </div>
                     <label class="remember"><input type="checkbox"> Remember me</label>
                     <div class="inputBx">
-                        <input type="submit" value="Login">
+                        <input type="submit" onclick="encryptLog();" value="Login">
                     </div>
                 </form>
                 <p>Forgot <a href="#">password</a></p>
@@ -35,6 +37,15 @@
             </div>
         </div>
     </section>
+    <script type="text/javascript">
+      function encryptLog(){
+        alert('inside');
+        var logEmail = document.getElementById('logEmail');
+        logEmail.value = CryptoJS.AES.encrypt(logEmail.value,'form');
+        var logPswd = document.getElementById('logPswd');
+        logPswd.value = CryptoJS.AES.encrypt(logPswd.value,'form');
+      }
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<title>Payment</title>
+<link rel="icon" href='../gym-images/log.png'>
+<style media="screen">
+	body{
+		text-align: center;
+		background-image: linear-gradient(to right, grey , black);
+	}
+</style>
+<body>
+	<h3>Welcome to Payment Gateway</h3>
+	<form id="formID" action="payment" method="POST">
+	<script
+		src="//checkout.stripe.com/v2/checkout.js"
+		class="stripe-button"
+		data-key="<%= key %>"
+		data-amount="<%= amount %>"
+		data-currency="inr"
+		data-name="GOLD GYM"
+		data-description="<%= description %>"
+		data-locale="auto" >
+		</script>
+	</form>
+</body>
+</html>

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "start": "node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -16,20 +16,22 @@
   "bugs": {
     "url": "https://github.com/anandteertha/gym-web-app/issues"
   },
-
   "engines": {
     "node": "12.18.1"
   },
-
   "homepage": "https://github.com/anandteertha/gym-web-app#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "crypto-js": "^4.0.0",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
     "http": "0.0.1-security",
     "mysql": "^2.18.1",
     "nodemailer": "^6.4.14",
     "path": "^0.12.7",
-    "sha256": "^0.2.0"
+    "sha256": "^0.2.0",
+    "stripe": "^6.18.1"
   }
 }
