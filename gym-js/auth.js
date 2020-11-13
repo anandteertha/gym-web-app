@@ -38,4 +38,5 @@ if(queryString.length == 0){
   }
   localStorage.mode = mode;
   console.log('mode : ',localStorage.mode);
+  localStorage.loggedIN = true;
 }

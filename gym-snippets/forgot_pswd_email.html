@@ -17,23 +17,18 @@
     <section>
         <div class="box">
             <div class="form">
-                <h2>Login</h2>
-                <form action="/login" method="post">
+                <h2>Email-ID</h2>
+                <form action="/forgotPswd_sendEmail" method="post">
                     <div class="inputBx">
                         <input type="text" id="logEmail" placeholder="Email" name='email'>
                         <img src="../gym-images/user.png" alt="">
                     </div>
                     <div class="inputBx">
-                        <input type="password" id="logPswd" placeholder="Password" name='pswd'>
-                        <img src="../gym-images/lock.png" alt="">
-                    </div>
-                    <label class="remember"><input type="checkbox"> Remember me</label>
-                    <div class="inputBx">
                         <input type="submit" onclick="encryptLog();" value="Login">
                     </div>
                 </form>
-                <p>Forgot <a href="forgot_pswd_email.html">password</a></p>
-                <p>Need an <a href="gym-login.html">account</a></p>
+                <p>Need an <a href="gym-login.html">account</a></p><br><br><br>
+                <p id="status"></p>
             </div>
         </div>
     </section>
@@ -42,8 +37,8 @@
         alert('inside');
         var logEmail = document.getElementById('logEmail');
         logEmail.value = CryptoJS.AES.encrypt(logEmail.value,'form');
-        var logPswd = document.getElementById('logPswd');
-        logPswd.value = CryptoJS.AES.encrypt(logPswd.value,'form');
+        var status = document.getElementById('status');
+        status.innerHTML = 'Please Check your Email we have sent a password recovery Link..'
       }
     </script>
 </body>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="../gym-css/loginform.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href='/gym-images/log.png'>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="/gym-js/auth.js" charset="utf-8"></script>
+</head>
+<script>
+var password = document.getElementById("logPswd");
+var confirm_password = document.getElementById("logPswdConfirm");
+//document.getElementById("up").disabled = true;
+function validatePassword(){
+  var password = document.getElementById("logPswd");
+  var confirm_password = document.getElementById("logPswdConfirm");
+  //alert('inside');
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+    //alert("Passwords Don't Match");
+  } else {
+    confirm_password.setCustomValidity('');
+    //document.getElementById("up").disabled = false;
+    //window.alert('data updated successfully');
+  }
+}
+
+password.onchange = validatePassword();
+confirm_password.onkeyup = validatePassword();
+
+</script>
+
+<body>
+    <section>
+        <div class="box">
+            <div class="form">
+                <h2>New Password..</h2>
+                <form action="/changedPswd" method="post">
+                    <div class="inputBx">
+                        <input type="password" required id="logPswd" placeholder="Password" name='pswd'>
+                        <img src="../gym-images/lock.png" alt="">
+                    </div>
+                    <div class="inputBx">
+                        <input type="password" onkeyup="validatePassword();" required id="logPswdConfirm" placeholder="Password" name='email'>
+                        <img src="../gym-images/lock.png" alt="">
+                    </div>
+                    <div class="inputBx">
+                        <input type="submit" onclick="encryptLog();" value="Login">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+      function encryptLog(){
+        alert('inside');
+        var logPswd = document.getElementById('logPswd');
+        logPswd.value = CryptoJS.AES.encrypt(logPswd.value,'form');
+        var queryString = new Array();
+        if(queryString.length == 0){
+          if(window.location.search.split('?').length > 1){
+            var params = window.location.search.split('?')[1].split('&');
+            for(var i = 0;i < params.length; i++){
+              var key = params[i].split('=')[0];
+              var value = params[i].split('=')[1];
+              value = decodeURIComponent(value);
+              value += '==';
+              var decrypted = CryptoJS.AES.decrypt(value, "secret pswd");
+              console.log('value: ',value);
+              console.log('decrypted: ',decrypted);
+              var tmp = {
+                key: key,
+                value: value,
+                decrypted: decrypted.toString(CryptoJS.enc.Utf8)
+              };
+              queryString[i] = tmp;
+            }
+          }
+
+          for(var i=0;i<queryString.length;i++){
+            if(queryString[i].key == 'useremail'){
+              document.getElementById('logPswdConfirm').value = queryString[i].value;
+              break;
+            }
+          }
+        }
+      }
+    </script>
+</body>
+
+</html>

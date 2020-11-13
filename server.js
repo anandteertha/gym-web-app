@@ -305,6 +305,46 @@ app.get('/style.css',function(req,res){
 	res.sendFile(path.join(__dirname+'/views'+'/style.css'));
 });
 
+app.get('/gym-js/planWise.js',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-js'+'/planWise.js'));
+});
+
+app.get('/gym-snippets/forgot_pswd_email.html',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/forgot_pswd_email.html'));
+});
+
+app.get('/gym-snippets/forgot_pswd.html',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/forgot_pswd.html'));
+});
+
+app.get('/gym-snippets/bg.mp4',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/bg.mp4'));
+});
+
+app.get('/gym-snippets/facebook.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/facebook.png'));
+});
+
+app.get('/gym-snippets/instagram.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/instagram.png'));
+});
+
+app.get('/gym-snippets/man.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/man.png'));
+});
+
+app.get('/gym-snippets/toggle.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/toggle.png'));
+});
+
+app.get('/gym-snippets/twitter.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/twitter.png'));
+});
+
+app.get('/gym-snippets/trainer.css',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/trainer.css'));
+});
+
 app.get('/invoice',function(req,res){
 	var url_invoice = req.url;
 	console.log('url_invoice = ',url_invoice);
@@ -443,7 +483,302 @@ app.get('/checkout', function(req, res){
 
 });
 
+
+app.get('/aboutUs',function(req,res){
+	var emailStr = new Array();
+	var u = req.url;
+	console.log('url recieved is: ',u);
+	var name;
+	var gender;
+	var mode = '';
+	if(u.split('?').length >1){
+		var params = u.split('?')[1].split('&');
+		for(var i=0;i<params.length;i++){
+			var key = params[i].split('=')[0];
+			var value = params[i].split('=')[1];
+			if(key == 'email'){
+				console.log('inside man!');
+				name = params[i].split('=')[1];
+				name = decodeURIComponent(name);
+				//console.log('before email = ',email);
+				name = CryptoJS.AES.decrypt(name,'secret pswd').toString(CryptoJS.enc.Utf8);
+				console.log(name);
+			}
+			else if (key == 'gender') {
+				gender = value;
+				gender = decodeURIComponent(value);
+			}
+			else if(value == 'online'){
+				mode += 'online ';
+			}
+			else if(value == 'offline'){
+				mode += 'offline ';
+			}
+			else if(value == 'trainer'){
+				mode += 'trainer';
+			}
+		}
+	}
+
+	connection.query('select gender,name,plans from gym_candidate where email=?',[name],function(err,results,fields){
+		if(err){
+			console.error('error occured while selecting from db!');
+			res.send('error occured sorry');
+		}
+		else{
+			res.render('about-us',{
+					key: 'hello world',
+					gender: results[0].gender,
+					name: results[0].name,
+					mode: results[0].plans
+				});
+		}
+	});
+	//console.log('render ke time ka gender? = ',global.gender_);
+});
+
+app.get('/trainers',function(req,res){
+	var u = req.url;
+	console.log('url of trainers: ',u);
+	res.render('trainer',{
+		name: 'name'
+	});
+});
+
+app.get('/gym-snippets/gym-equipments',function(req,res){
+	var emailStr = new Array();
+	var u = req.url;
+	console.log('url recieved is: ',u);
+	var name;
+	var gender;
+	var mode = '';
+	if(u.split('?').length >1){
+		var params = u.split('?')[1].split('&');
+		for(var i=0;i<params.length;i++){
+			var key = params[i].split('=')[0];
+			var value = params[i].split('=')[1];
+			if(key == 'email'){
+				console.log('inside man!');
+				name = params[i].split('=')[1];
+				name = decodeURIComponent(name);
+				//console.log('before email = ',email);
+				name = CryptoJS.AES.decrypt(name,'secret pswd').toString(CryptoJS.enc.Utf8);
+				console.log(name);
+			}
+			else if (key == 'gender') {
+				gender = value;
+				gender = decodeURIComponent(value);
+			}
+			else if(value == 'online'){
+				mode += 'online ';
+			}
+			else if(value == 'offline'){
+				mode += 'offline ';
+			}
+			else if(value == 'trainer'){
+				mode += 'trainer';
+			}
+		}
+	}
+
+	connection.query('select gender,name,plans from gym_candidate where email=?',[name],function(err,results,fields){
+		if(err){
+			console.error('error occured while selecting from db!');
+			res.send('error occured sorry');
+		}
+		else{
+			res.render('gym-equipments',{
+					key: 'hello world',
+					gender: results[0].gender,
+					name: results[0].name,
+					mode: results[0].plans
+				});
+		}
+	});
+});
+
+app.get('/gym-snippets/userOptions',function(req,res){
+	var emailStr = new Array();
+	var u = req.url;
+	console.log('url recieved is: ',u);
+	var name;
+	var gender;
+	var mode = '';
+	if(u.split('?').length >1){
+		var params = u.split('?')[1].split('&');
+		for(var i=0;i<params.length;i++){
+			var key = params[i].split('=')[0];
+			var value = params[i].split('=')[1];
+			if(key == 'email'){
+				console.log('inside man!');
+				name = params[i].split('=')[1];
+				name = decodeURIComponent(name);
+				//console.log('before email = ',email);
+				name = CryptoJS.AES.decrypt(name,'secret pswd').toString(CryptoJS.enc.Utf8);
+				console.log(name);
+			}
+			else if (key == 'gender') {
+				gender = value;
+				gender = decodeURIComponent(value);
+			}
+			else if(value == 'online'){
+				mode += 'online ';
+			}
+			else if(value == 'offline'){
+				mode += 'offline ';
+			}
+			else if(value == 'trainer'){
+				mode += 'trainer';
+			}
+		}
+	}
+	console.log('name: ',name);
+	connection.query('select plans from gym_candidate where email=?',[name],function(error,results,fields){
+		if(error){
+			console.error('error happened while selecting plans');
+			res.send('sorry some error occured in serevr..');
+		}
+		else{
+			var plans;
+			plans = results[0].plans.split(',');
+			var online = 'Buy to View';
+			var offline = 'Buy to View';
+			var trainer = 'Buy to View';
+			if(Array.isArray(plans)){
+					for(var i=0;i<plans.length;i++){
+						if(plans[i] == 'online'){
+							online = 'select';
+						}
+						else if(plans[i] == 'offline'){
+							offline = 'select';
+						}
+						else{
+							trainer = 'select';
+						}
+					}
+			}
+			else {
+				if(plans == 'online'){
+					online = 'select';
+				}
+				else if(plans == 'offline'){
+					offline = 'select';
+				}
+				else{
+					trainer = 'select';
+				}
+			}
+			res.render('userOptions',{
+				online: online,
+				offline: offline,
+				trainer: trainer
+			});
+		}
+	});
+});
+
 //post methods here....
+
+app.post('/changedPswd',function(req,res){
+	//console.log('pswd: ',req.body.pswd);
+	console.log('email: ',req.body.email);
+	var pswd = CryptoJS.AES.decrypt(req.body.pswd,'form').toString(CryptoJS.enc.Utf8);
+	var email = CryptoJS.AES.decrypt(req.body.email,'form').toString(CryptoJS.enc.Utf8);
+	var url = 'http://localhost:5000/gym-snippets/forgot_pswd.html?useremail=' + decodeURIComponent(req.body.email);
+	connection.query('update gym_candidate set pswd=? where email=?',[req.body.pswd,email],function(err,results,fields){
+		if(err){
+			console.log('error happened while updating the pswd..');
+			res.send('error happened while updating the pswd..');
+		}
+		else{
+			console.log('updated pswd successfully!');
+			var transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: 'goldgym003@gmail.com',
+						pass: 'gold-gym-003-@@'
+					}
+				});
+
+				var mailOptions = {
+					from: 'goldgym003@gmail.com',
+					to: email,
+					subject: 'Gold Gym',
+					text: 'Hello user, your password, was successfully changed!!'
+					+ '\n'
+					+ '\n'
+					+ '\n If this action was not performed by you please click on the link below to redirect to your page to set it again..'
+					+ '\n'
+					+ '\n'
+					+ '\n' + 'LINK to Change Password..'
+					+ '\n'
+					+ '\n'
+					+ '\n'
+					+ '\n'+ url
+				};
+
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+						console.log(error);
+						res.send('error while sending email.. ')
+					} else {
+						console.log('Email sent: ' + info.response);
+						res.redirect(url.replace('forgot_pswd.html','loginform.html'));
+					}
+				});
+		}
+	});
+});
+
+
+app.post('/forgotPswd_sendEmail',function(req,res){
+	console.log('email: ',req.body.email);
+	var email_ = req.body.email;
+	//email = email.toString();
+	var email = CryptoJS.AES.decrypt(email_,'form');
+	email = email.toString(CryptoJS.enc.Utf8);
+	console.log('after decrypt email: ',email);
+	var url = 'http://localhost:5000/gym-snippets/forgot_pswd.html?useremail=' + decodeURIComponent(email_);
+	var transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: 'goldgym003@gmail.com',
+				pass: 'gold-gym-003-@@'
+			}
+		});
+
+		var mailOptions = {
+			from: 'goldgym003@gmail.com',
+			to: email,
+			subject: 'Gold Gym',
+			text: 'Hello user, here is the link for you to change your password.'
+			+ '\n'
+			+ '\n'
+			+ '\n By clicking on this you confirm that you want to change the password..'
+			+ '\n'
+			+ '\n'
+			+ '\n' + 'LINK to Change Password..'
+			+ '\n'
+			+ '\n'
+			+ '\n'
+			+ '\n'+ url
+		};
+
+		transporter.sendMail(mailOptions, function(error, info){
+			if (error) {
+				console.log(error);
+				res.send('error while sending email.. ')
+			} else {
+				console.log('Email sent: ' + info.response);
+				res.redirect(url);
+			}
+		});
+
+
+});
+
+
+
 
 app.post('/payment', function(req, res){
 
@@ -476,13 +811,34 @@ app.post('/payment', function(req, res){
 		console.log('charge: ',req.body.stripeEmail);
 		console.log('plans: ',global.plans);
 		var plansStr = global.plans.toString();
-		connection.query('update gym_candidate set plans = ?, totalPayment = ?,payment_done = "true" where email=? ',[plansStr,global.totalAmount,req.body.stripeEmail],function(err,result,fields){
-			if(err){
-				console.log(err);
-				console.log('error happened while updating..');
+		connection.query('select plans from gym_candidate where email=?',[req.body.stripeEmail],function(error,results,field){
+			if(error){
+				console.error('error happened while selecting');
+				res.send('sorry some error happened in the server');
 			}
 			else{
-				console.log('successfull in updating the database...');
+				if(results[0].plans !== null){
+					connection.query('update gym_candidate set  totalPayment = ?,payment_done = "true" where email=? ',[global.totalAmount,req.body.stripeEmail],function(err,result,fields){
+						if(err){
+							console.log(err);
+							console.log('error happened while updating..');
+						}
+						else{
+							console.log('successfull in updating the database...');
+						}
+					});
+				}
+				else{
+					connection.query('update gym_candidate set plans = ?, totalPayment = ?,payment_done = "true" where email=? ',[plansStr,global.totalAmount,req.body.stripeEmail],function(err,result,fields){
+						if(err){
+							console.log(err);
+							console.log('error happened while updating..');
+						}
+						else{
+							console.log('successfull in updating the database...');
+						}
+					});
+				}
 			}
 		});
 		//res.send("hello world") // If no error occurs
@@ -693,31 +1049,106 @@ app.post('/login',function(request,response){
 	console.log('email: ',email);
 	console.log('pswd: ',pswd);
 	if(email && pswd){
-		connection.query('SELECT name,pswd,gender,plans FROM gym_candidate WHERE email = ?',[email],function(errors,results,fields){
+		connection.query('SELECT * FROM gym_candidate WHERE email = ?',[email],function(errors,results,fields){
 			console.log('results = ',results);
-			if(CryptoJS.AES.decrypt(results[0].pswd,'form').toString(CryptoJS.enc.Utf8) == pswd){
-				console.log('successfully logged in!');
-				email = CryptoJS.AES.encrypt(email,'secret pswd');
-				var username = CryptoJS.AES.encrypt(results[0].name,'secret pswd');
-				var plans = results[0].plans.split(',');
-				var url_login = '/index?useremail='+encodeURIComponent(email) +
-				'&username=' + encodeURIComponent(username) +
-				'&gender=' + encodeURIComponent(results[0].gender);
-				if(Array.isArray(plans) ==false){
-					url_login += '&0' + encodeURIComponent(plans);
+			if(results[0].payment_done == true){
+				if(CryptoJS.AES.decrypt(results[0].pswd,'form').toString(CryptoJS.enc.Utf8) == pswd){
+					console.log('successfully logged in!');
+					email = CryptoJS.AES.encrypt(email,'secret pswd');
+					var username = CryptoJS.AES.encrypt(results[0].name,'secret pswd');
+					var plans = results[0].plans.split(',');
+					var url_login = '/index?useremail='+encodeURIComponent(email) +
+					'&username=' + encodeURIComponent(username) +
+					'&gender=' + encodeURIComponent(results[0].gender);
+					if(Array.isArray(plans) ==false){
+						url_login += '&0' + encodeURIComponent(plans);
+					}
+					else{
+						for(var i=0;i<plans.length;i++){
+							url_login += '&' + i + '=' + encodeURIComponent(plans[i]);
+						}
+					}
+					response.redirect(url_login);
 				}
 				else{
-					for(var i=0;i<plans.length;i++){
-						url_login += '&' + i + '=' + encodeURIComponent(plans[i]);
-					}
+					response.send('sorryy but the pswd was wrong!');
 				}
-				response.redirect(url_login);
 			}
 			else{
-				response.send('sorryy but the pswd was wrong!');
+				if(results[0].plans == null){
+					response.render('register',{
+						name: results[0].name,
+						l_name: results[0].l_name,
+						gender: results[0].gender,
+						number: results[0].number,
+						email: results[0].email,
+						pswd: CryptoJS.AES.decrypt(results[0].pswd,'form').toString(CryptoJS.enc.Utf8)
+					});
+				}
 			}
 		});
 	}
+});
+
+app.post('/register/update',function(request,response){
+	var name = request.body.fname;
+  var pswd = request.body.pswd;
+  var l_name = request.body.lname;
+  var gender = request.body.optradio;
+  var email = request.body.email;
+  var number = request.body.tel;
+	var plan =request.body.plans;
+	console.log('plans:- ',plan);
+	name = CryptoJS.AES.decrypt(name,'form');
+	l_name = CryptoJS.AES.decrypt(l_name,'form');
+	email = CryptoJS.AES.decrypt(email,'form');
+	//number = CryptoJS.AES.decrypt(number,'form').toString(CryptoJS.enc.Utf8);
+	//number = Number(number);
+  var tmp = {
+    name: name.toString(CryptoJS.enc.Utf8),
+    pswd: pswd,
+    l_name: l_name.toString(CryptoJS.enc.Utf8),
+    gender: gender,
+    email: email.toString(CryptoJS.enc.Utf8),
+		number: Number(number),
+		payment_done: 'false'
+  };
+	global.gender_ = gender;
+	//console.log('stripe.charges: ',stripe.charges);
+
+	console.log('tmp recieved is: ',tmp);
+  if(email && pswd && number){
+    connection.query('update gym_candidate SET plans = ?',plan,function(errors,results,fields){
+      if(errors){
+        console.log('error while updating..');
+        return;
+      }
+      else{
+
+					var onlineProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+					var offlineProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+					var trainerProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+					var encodedEmail = CryptoJS.AES.encrypt(email, "secret pswd");
+
+					var decrypted = CryptoJS.AES.decrypt(encodedEmail, "secret pswd");
+
+					var url = 'http://localhost:5000/checkout?useremail='+ encodeURIComponent(encodedEmail);
+					if(Array.isArray(plan) == false){
+						url += '&' + 0 + '=' + encodeURIComponent(plan);
+					}
+					else{
+						for(var i=0;i<plan.length;i++){
+							url +=  '&' + i + '=' + encodeURIComponent(plan[i]);
+						}
+					}
+					console.log('url now is: ',url);
+					response.redirect(url);
+      }
+    });
+  }
+  else{
+    response.send('PLEASE ENTER THE REQUIRED CREDENTIALS...');
+  }
 });
 
 //http listen on port 4000...

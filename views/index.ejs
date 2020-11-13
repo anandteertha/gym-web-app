@@ -14,18 +14,37 @@
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<style media="screen">
 		#iconMoF{
-			width: 150px;
+			width: 200px;
 			height: 120px;
-			margin-top: 20px;
+			margin-top: 40px;
+			margin-left: 10px;
 			background-size: 100px;
 			background-repeat: no-repeat;
 			color: white;
 			text-align: center;
-			color: gold;
+			color: white;
 			text-shadow: 0.5px 0.5px white;
+			scrollbar-width: thin;
+
+		}
+		body::-webkit-scrollbar {
+		width: 4px;
+		}
+
+		body::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.8);
+		border-radius: 10px;
+		}
+		div::-webkit-scrollbar {
+		width: 4px;
+		}
+
+		div::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.8);
+		border-radius: 10px;
 		}
 		#imgID{
-			margin-top: 15px;
+			margin-top: 30px;
 			border-radius: 50%;
 			text-align: center;
 			cursor: pointer;
@@ -33,12 +52,14 @@
 		}
 		#logoutBtn{
 			width: 150px;
-			height: 40px;
+			height: 48px;
 			background-color: white;
 			color: black;
 			cursor: pointer;
 			padding: 5px;
 			float: right;
+			border-radius: 5px;
+			margin: 3px;
 		}
 		#logoutBtn:hover{
 			border: 1px solid gold;
@@ -56,6 +77,8 @@
 			cursor: pointer;
 			padding: 5px;
 			float: right;
+			border-radius: 5px;
+			margin: 3px;
 		}
 		#invoice:hover{
 			border: 1px solid gold;
@@ -64,6 +87,22 @@
 		#invoice:active{
 			transform: translateY(4px);
 			opacity: 0.4;
+		}
+		#aboutUs_ID{
+			margin-top: 40px;
+			background: rgba(222,222,222,0.001);
+			margin-left: 30px;
+			margin-right: 30px;
+			border: none;
+			width: 80%;
+			color: white;
+		}
+		#aboutUs_ID:hover{
+			color: white;
+
+		}
+		#aboutUs_ID:active{
+			transform: translateY(3px);
 		}
 	</style>
 </head>
@@ -89,32 +128,103 @@
 			</button>
 
 			<div class="collapse navbar-collapse" id="target">
-				<ul id="nav-list" class="navbar-nav ml-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="gym-snippets/about-us.html">About Us</a>
-					</li>
 
-					<li class="nav-item">
-						<a class="nav-link" href="gym-snippets/gym-equipments.html">Equipments</a>
-					</li>
+					<ul id="nav-list" class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<form action="/aboutUs" method="get" >
+								<input type="hidden" name="email" id="emailid" value="">
+								<script type="text/javascript">document.getElementById('emailid').value = localStorage.email</script>
+								<input id="aboutUs_ID" type="submit" class="nav-link" value="About Us">
+							</form>
+						</li>
 
-					<li class="nav-item">
-						<a class="nav-link" href="#">Trainers</a>
-					</li>
-
-					<li class="nav-item">
-            <a class="nav-link" href="gym-images/userOptions.html">Plans</a>
-					</li>
-					<div onclick="displayOptions();" class="w3-dropdown-hover w3-right" id='iconMoF'>
+						<li class="nav-item">
+							<form action="/gym-snippets/gym-equipments" method="get" >
+								<input type="hidden" name="email" id="emailid9" value="">
+								<script type="text/javascript">document.getElementById('emailid9').value = localStorage.email</script>
+								<input id="aboutUs_ID" type="submit" class="nav-link" value="Equipments">
+							</form>
+						</li>
+						<% console.log(mode.length) %>
+						<% var modeArray = mode.split(' ') %>
+						<% console.log(modeArray) %>
+						<% if(Array.isArray(modeArray) == true) { %>
+							<% for(var i=0;i < modeArray.length;i++) {%>
+								<% if(modeArray[i] == 'trainer'){ %>
+									<li class="nav-item">
+										<form action="/trainers" method="get" >
+											<input type="hidden" name="email" id="emailid2" value="">
+											<script type="text/javascript">document.getElementById('emailid2').value = localStorage.email</script>
+											<input id="aboutUs_ID" type="submit" class="nav-link" value="Trainers">
+										</form>
+									</li>
+								<% } %>
+								<% if(modeArray[i] =='online'){ %>
+									<li class="nav-item">
+										<form action="/online" method="get" >
+											<input type="hidden" name="email" id="emailid3" value="">
+											<script type="text/javascript">document.getElementById('emailid3').value = localStorage.email</script>
+											<input id="aboutUs_ID" type="submit" class="nav-link" value="Online">
+										</form>
+									</li>
+								<% } %>
+								<% if(modeArray[i] == 'offline') {%>
+									<li class="nav-item">
+										<form action="/offline" method="get" >
+											<input type="hidden" name="email" id="emailid4" value="">
+											<script type="text/javascript">document.getElementById('emailid4').value = localStorage.email</script>
+											<input id="aboutUs_ID" type="submit" class="nav-link" value="Offline">
+										</form>
+									</li>
+								<% } %>
+							<% } %>
+						<% } %>
+						<% if(Array.isArray(modeArray) == false){ %>
+							<% if(modeArray == 'trainer'){ %>
+								<li class="nav-item">
+									<form action="/trainers" method="get" >
+										<input type="hidden" name="email" id="emailid5" value="">
+										<script type="text/javascript">document.getElementById('emailid5').value = localStorage.email</script>
+										<input id="aboutUs_ID" type="submit" class="nav-link" value="Trainers">
+									</form>
+								</li>
+							<% } %>
+							<% if(modeArray =='online'){ %>
+								<li class="nav-item">
+									<form action="/online" method="get" >
+										<input type="hidden" name="email" id="emailid6" value="">
+										<script type="text/javascript">document.getElementById('emailid6').value = localStorage.email</script>
+										<input id="aboutUs_ID" type="submit" class="nav-link" value="Online">
+									</form>
+								</li>
+							<% } %>
+							<% if(modeArray == 'offline') {%>
+								<li class="nav-item">
+									<form action="/offline" method="get" >
+										<input type="hidden" name="email" id="emailid7" value="">
+										<script type="text/javascript">document.getElementById('emailid7').value = localStorage.email</script>
+										<input id="aboutUs_ID" type="submit" class="nav-link" value="Offline">
+									</form>
+								</li>
+							<% } %>
+						<% } %>
+						<li class="nav-item">
+							<form action="/gym-snippets/userOptions" method="get" >
+								<input type="hidden" name="email" id="emailid8" value="">
+								<script type="text/javascript">document.getElementById('emailid8').value = localStorage.email</script>
+								<input id="aboutUs_ID" type="submit" class="nav-link" value="Plans">
+							</form>
+						</li>
+						<div onclick="displayOptions();" class="w3-dropdown-hover w3-right" id='iconMoF'>
+							<script type="text/javascript">
+								document.getElementById("iconMoF").innerHTML += "<%= email %>" +'<br><small>plans: ' + "<%=mode%>" +'</small><br>';
+							</script>
+						</div>
+						<img onclick="displayOptions();" style="float='right'" width="30px" height="50px" id="imgID"  alt="">
 						<script type="text/javascript">
-							document.getElementById("iconMoF").innerHTML += "<%= email %>" +'<br><small>plans: ' + "<%=mode%>" +'</small><br>';
+							document.getElementById('imgID').src = 'gym-images/'+ "<%= gender %>" +'.jpg';
 						</script>
-					</div>
-					<img onclick="displayOptions();" style="float='right'" width="30px" height="50px" id="imgID"  alt="">
-					<script type="text/javascript">
-						document.getElementById('imgID').src = 'gym-images/'+ "<%= gender %>" +'.jpg';
-					</script>
-				</ul>
+					</ul>
 			</div>
 		</nav>
 	</header>
@@ -240,28 +350,52 @@
 			if(clicked == false){
 				var logOut = document.createElement('div');
 				var invoice = document.createElement('div');
+				var forgot_pswd = document.createElement('div');
 				var iconMoF = document.getElementById('iconMoF');
+				iconMoF.style.overflow = 'auto';
 				invoice.setAttribute('id','invoice');
 				invoice.setAttribute('onclick','displayInvoice()');
 				invoice.innerHTML = 'Invoice..';
 				iconMoF.appendChild(invoice);
+				forgot_pswd.setAttribute('id','logoutBtn');
+				forgot_pswd.setAttribute('onclick','changePswd()');
+				forgot_pswd.innerHTML = 'Change Password..';
+				iconMoF.appendChild(forgot_pswd);
 				logOut.setAttribute('id','logoutBtn');
 				logOut.setAttribute('onclick','logout()');
 				logOut.innerHTML = 'Log Out..';
 				iconMoF.appendChild(logOut);
 				clicked = true;
+				return;
 			}
+			if(clicked == true){
+				var logOut = document.getElementById('logoutBtn');
+				logOut.style.display = 'none';
+				logOut.style.visibility = 'hidden';
+				var invoice = document.getElementById('invoice');
+				invoice.style.display = 'none';
+				invoice.style.visibility = 'hidden';
+				clicked = false;
+				return;
+			}
+		}
+		function changePswd(){
+			window.location = 'http://localhost:5000/gym-snippets/forgot_pswd.html?useremail='+localStorage.email;
 		}
 		function undisplayOptions(){
 			var logOut = document.getElementById('logoutBtn');
 			logOut.style.display = 'none';
 			logOut.style.visibility = 'hidden';
+			var invoice = document.getElementById('invoice');
+			invoice.style.display = 'none';
+			invoice.style.visibility = 'hidden';
 		}
 		function logout(){
 			//alert('inside');
 			localStorage.username = undefined;
 			localStorage.email = undefined;
 			localStorage.mode = undefined;
+			localStorage.loggedIN = undefined;
 			window.location = 'http://localhost:5000/gym-snippets/loginform.html';
 		}
 		function displayInvoice(){

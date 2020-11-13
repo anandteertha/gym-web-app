@@ -7,7 +7,7 @@ body{
 	background-color: #2196F3;
 	border-radius: 0px;
 	border:0px;
-	
+
 }
 #logo{
 	background-image: url("../gym-images/log.png");
@@ -18,11 +18,11 @@ body{
 }
 .navbar-brand{
 	position: relative;
-	
+
 }
 .navbar-brand a:hover, .navbar-brand a:focus{
 	text-decoration: none;
-	
+
 	}
 .navbar-brand h1{
 	color: #FFC107;
@@ -34,11 +34,11 @@ body{
 	margin: 20px;
 }
 #nav-list a:hover{
-	
-	color: black;
+
+	color: gold;
 }
 .jumbotron{
-	box-shadow: 0 0 50px #616161; 
+	box-shadow: 0 0 50px #616161;
 	border:2px solid #3F0C1F;
 	margin: 20px;
 }
@@ -113,10 +113,10 @@ h3{
 	background-color: #FFF9C4;
 	margin: 20px;
 	padding: 20px;
-	border-radius: 10px;	
+	border-radius: 10px;
 }
 .para1{
-	
+
 	text-align: center;
 	font-style: italic;
 	font-size: 2em;
@@ -138,9 +138,9 @@ h3{
 	font-size: 1.2em;
 }
 .mySlides {
-	
+
 	box-shadow: 5px 5px 18px #616161;
-	
+
 }
 img {vertical-align: middle;}
 /* Slideshow container */
@@ -173,7 +173,7 @@ img {vertical-align: middle;}
 /* Position the "next button" to the right */
 .prev{
 	left: 0px;
-	border-radius: 3px 0 0 3px;	
+	border-radius: 3px 0 0 3px;
 }
 .next {
   right: 0px;//130px;
@@ -219,7 +219,7 @@ iframe{
 	border-radius: 10px;
 }
 .special2{
-	
+
 	font-weight: bold;
 	font-size: 2em;
 	color: #F44336;//#F57C00;
@@ -228,7 +228,7 @@ iframe{
 	text-align: right;
 }
 #special3{
-	
+
 	margin-right: 100px;
 	margin-top: 20px;
 }
@@ -240,11 +240,11 @@ iframe{
 	color: white;
 	text-align: center;
 	border:none;
-	
+
 	display: inline-block;
 	border-radius: 12px;
-	transition-duration: 0.4s; 
-	
+	transition-duration: 0.4s;
+
 }
 .button:hover {
 	background-color: black;
@@ -261,7 +261,7 @@ iframe{
 	position: absolute;
 	left: 79%;
 	margin-top: 10px;
-	transition-duration: 0.4s; 
+	transition-duration: 0.4s;
 }
 .button1:hover {
 	background-color: black;//#e7e7e7;
@@ -327,17 +327,23 @@ b{
 .form-group{
 	color: white;
 	width: 50%;
-	
+
 	margin-top: 20px;
-	margin-bottom: 20px;	
+	margin-bottom: 20px;
 	margin-left: auto;
 	margin-right: auto;
 }
 .form-check-inline{
 	color: white;
-	
+
 }
 
+body::-webkit-scrollbar {
+width: 4px;
+}
+
+body::-webkit-scrollbar-track {
+-webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.8);
+border-radius: 10px;
+}
 /* gym-login.html ends */
-
-
