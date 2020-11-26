@@ -9,6 +9,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="icon" href='/gym-images/log.png'>
     <!--<script src="/gym-js/auth.js" charset="utf-8"></script>-->
 
@@ -28,7 +29,7 @@
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam officia reprehenderit possimus
                     dolore, expedita harum nobis, aliquam, tempora repudiandae voluptatibus iusto deleniti
                     necessitatibus? Dicta cumque, voluptatem nulla totam placeat accusamus.</p>
-                <a href="loginform.html"><%= offline %></a>
+                <a id='aTag1'><%= offline %></a>
             </div>
         </div>
         <div class="card" id="onlineDiv">
@@ -42,7 +43,7 @@
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam officia reprehenderit possimus
                     dolore, expedita harum nobis, aliquam, tempora repudiandae voluptatibus iusto deleniti
                     necessitatibus? Dicta cumque, voluptatem nulla totam placeat accusamus.</p>
-                <a href="loginform.html"><%= online %></a>
+                <a id='aTag2'><%= online %></a>
             </div>
         </div>
         <div class="card" id="trainerDiv">
@@ -56,12 +57,116 @@
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam officia reprehenderit possimus
                     dolore, expedita harum nobis, aliquam, tempora repudiandae voluptatibus iusto deleniti
                     necessitatibus? Dicta cumque, voluptatem nulla totam placeat accusamus.</p>
-                <a href="loginform.html"><%= trainer %></a>
+                <a id='aTag3' ><%= trainer %></a>
             </div>
         </div>
     </div>
   </center>
+
     <!--<script src="/gym-js/planWise.js" charset="utf-8"></script>-->
+    <script type="text/javascript">
+      var aTag1 = document.getElementById('aTag1');
+      var aTag2 = document.getElementById('aTag2');
+      var aTag3 = document.getElementById('aTag3');
+      var emailStr = new Array();
+    	var u = window.location.toString();
+      var email;
+    	console.log('url recieved is: ',u);
+    	var name;
+    	var gender;
+    	var mode = '';
+    	if(u.split('?').length >1){
+    		var params = u.split('?')[1].split('&');
+    		for(var i=0;i<params.length;i++){
+    			var key = params[i].split('=')[0];
+    			var value = params[i].split('=')[1];
+    			if(key == 'email' || key == 'useremail'){
+    				console.log('inside man!');
+    				name = params[i].split('=')[1];
+            email = name;
+    				name = decodeURIComponent(name);
+    				//console.log('before email = ',email);
+    				name = CryptoJS.AES.decrypt(name,'secret pswd').toString(CryptoJS.enc.Utf8);
+    				console.log(name);
+    			}
+    			else if (key == 'gender') {
+    				gender = value;
+    				gender = decodeURIComponent(value);
+    			}
+    			else if(value == 'online'){
+    				mode += 'online ';
+    			}
+    			else if(value == 'offline'){
+    				mode += 'offline ';
+    			}
+    			else if(value == 'trainer'){
+    				mode += 'trainer';
+    			}
+    		}
+    	}
+      aTag1.addEventListener('click',function(e){
+        if (aTag1.innerHTML == 'Buy to View') {
+          //alert('hello');
+
+          var body = document.getElementsByTagName("BODY")[0];
+          var data = body.innerHTML;
+          setTimeout(function () {
+            //body.style.display='none';
+            body.style.color = 'white';
+            body.innerHTML = 'BUY TO VIEW';
+
+          }, 100);
+          setTimeout(function () {
+            //body.style.display='block';
+            body.innerHTML = data;
+          }, 2000);
+        }
+        else{
+          aTag1.href = '../offlinePlan?email='+email;
+        }
+      });
+
+      aTag2.addEventListener('click',function(e){
+        if (aTag2.innerHTML == 'Buy to View') {
+          var body = document.getElementsByTagName("BODY")[0];
+          var data = body.innerHTML;
+          setTimeout(function () {
+            //body.style.display='none';
+            body.style.color = 'white';
+            body.innerHTML = 'BUY TO VIEW';
+
+          }, 100);
+          setTimeout(function () {
+            //body.style.display='block';
+            body.innerHTML = data;
+          }, 2000);
+        }
+        else{
+          aTag2.href = '../onlinePlan?email='+email;
+        }
+      });
+
+      aTag3.addEventListener('click',function(e){
+        if (aTag3.innerHTML == 'Buy to View') {
+          var body = document.getElementsByTagName("BODY")[0];
+          var data = body.innerHTML;
+          setTimeout(function () {
+            //body.style.display='none';
+            body.style.color = 'white';
+            body.innerHTML = 'BUY TO VIEW';
+
+          }, 100);
+          setTimeout(function () {
+            //body.style.display='block';
+            body.innerHTML = data;
+          }, 2000);
+        }
+        else{
+          aTag3.href = '../trainers?email='+email;
+        }
+      });
+
+    </script>
 </body>
 
 </html>

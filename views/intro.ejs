@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome to Gold Gym</title>
+    <link rel="icon" href='../gym-images/log.png'>
+    <link rel="stylesheet" href="../gym-css/gym-css.css">
+    <link rel="stylesheet" href="../gym-css/intro.css">
+  </head>
+  <style media="screen">
+    .slidercontainer{
+      margin-top: 200px;
+    }
+    #h{
+      margin: 50px;
+      text-align: center;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      font-size: 30px;
+      border: 2px dotted white;
+    }
+    .skip{
+      width: 100px;
+      height: 30px;
+      cursor: pointer;
+      background-color: black;
+      color: white;
+      border: 1px dotted white;
+    }
+  </style>
+  <body>
+    <div class="slidercontainer">
+        <div id="h" class="showSlide fade">
+            Landing Page..<br>
+            <img src="../gym-images/fp.png" width="500px" height="500px"/>
+
+        </div>
+        <div id="h" class="showSlide fade">
+            Menu Options..<br>
+            <img src="../gym-images/sp.png" width="500px" height="500px"/>
+
+        </div>
+
+        <div id="h" class="showSlide fade">
+            Menu Options..<br>
+            <img src="../gym-images/thirdp.png" width="500px" height="500px"/>
+
+        </div>
+        <div id="h"class="showSlide fade">
+            About Us..<br>
+            <img src="../gym-images/fourthp.png" width="500px" height="500px"/>
+
+        </div>
+        <div id="h"class="showSlide fade">
+            Gym Equipments..<br>
+            <img src="../gym-images/fifthp.png" width="500px" height="500px"/>
+
+        </div>
+
+        <div id="h" class="showSlide fade">
+            Plans..<br>
+            <img src="../gym-images/sixthp.png" width="500px" height="500px"/>
+
+        </div>
+
+        <div id="h" class="showSlide fade">
+            Menu Options which were bought by you..<br>
+            <img src="../gym-images/seventhp.png" width="500px" height="500px"/>
+
+        </div>
+
+        <div id="h"class="showSlide fade">
+            sample invoice..<br>
+            <img src="../gym-images/eigthp.png" width="500px" height="500px"/>
+
+        </div>
+
+        <!-- Navigation arrows -->
+        <a class="left" onclick="nextSlide(-1)">❮</a>
+        <a class="right" onclick="nextSlide(1)">❯</a>
+        <center><button id="skip" class="skip" type="button" name="button" style="float: right" onclick="gottoIndex();">skip..</button></center>
+    </div>
+
+    <script type="text/javascript">
+        var slide_index = 1;
+        displaySlides(slide_index);
+        function nextSlide(n) {
+            displaySlides(slide_index += n);
+        }
+        function currentSlide(n) {
+            displaySlides(slide_index = n);
+        }
+        function displaySlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("showSlide");
+            if (n > slides.length) { slide_index = 1 }
+            if (n < 1) { slide_index = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slide_index - 1].style.display = "block";
+        }
+        function gottoIndex(){
+          //alert('inside');
+          var url = window.location;
+          url = url.toString();
+          url = url.replace('intro','index');
+          window.location = url;
+        }
+</script>
+  </body>
+</html>

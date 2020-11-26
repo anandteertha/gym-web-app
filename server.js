@@ -1,5 +1,5 @@
 var PORT = process.env.PORT || 5000;
-var mysql = require('mysql');
+var mysql = require('mysql');//npm i --save mysql
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -496,7 +496,7 @@ app.get('/aboutUs',function(req,res){
 		for(var i=0;i<params.length;i++){
 			var key = params[i].split('=')[0];
 			var value = params[i].split('=')[1];
-			if(key == 'email'){
+			if(key == 'useremail' || key == 'email'){
 				console.log('inside man!');
 				name = params[i].split('=')[1];
 				name = decodeURIComponent(name);
@@ -597,7 +597,8 @@ app.get('/gym-snippets/gym-equipments',function(req,res){
 	});
 });
 
-app.get('/gym-snippets/userOptions',function(req,res){
+app.get('/home',function(req,res){
+	console.log('url: ',req.url);
 	var emailStr = new Array();
 	var u = req.url;
 	console.log('url recieved is: ',u);
@@ -610,6 +611,106 @@ app.get('/gym-snippets/userOptions',function(req,res){
 			var key = params[i].split('=')[0];
 			var value = params[i].split('=')[1];
 			if(key == 'email'){
+				console.log('inside man!');
+				name = params[i].split('=')[1];
+				name = decodeURIComponent(name);
+				//console.log('before email = ',email);
+				email = CryptoJS.AES.decrypt(name,'secret pswd').toString(CryptoJS.enc.Utf8);
+				console.log('decrypted email: ',email);
+				connection.query('select * from gym_candidate where email=?',[email],function(error,results,fields){
+					if(error){
+						console.log(error);
+						res.send('error sorry');
+					}
+					else{
+							var username = CryptoJS.AES.encrypt(results[0].name,'secret pswd');
+							var plans = results[0].plans.split(',');
+							var url_login = '/index?useremail='+encodeURIComponent(name) +
+							'&username=' + encodeURIComponent(username) +
+							'&gender=' + encodeURIComponent(results[0].gender);
+							if(Array.isArray(plans) ==false){
+								url_login += '&0' + encodeURIComponent(plans);
+							}
+							else{
+								for(var i=0;i<plans.length;i++){
+									url_login += '&' + i + '=' + encodeURIComponent(plans[i]);
+								}
+							}
+							res.redirect(url_login);
+
+					}
+
+				});
+				break;
+			}
+		}
+	}
+});
+
+app.get('/gym-snippets/userOptionss',function(req,res){
+	console.log('url: ',req.url);
+	var emailStr = new Array();
+	var u = req.url;
+	console.log('url recieved is: ',u);
+	var name;
+	var gender;
+	var mode = '';
+	if(u.split('?').length >1){
+		var params = u.split('?')[1].split('&');
+		for(var i=0;i<params.length;i++){
+			var key = params[i].split('=')[0];
+			var value = params[i].split('=')[1];
+			if(key == 'email'){
+				console.log('inside man!');
+				name = params[i].split('=')[1];
+				name = decodeURIComponent(name);
+				//console.log('before email = ',email);
+				email = CryptoJS.AES.decrypt(name,'secret pswd').toString(CryptoJS.enc.Utf8);
+				console.log('decrypted email: ',email);
+				connection.query('select * from gym_candidate where email=?',[email],function(error,results,fields){
+					if(error){
+						console.log(error);
+						res.send('error sorry');
+					}
+					else{
+							var username = CryptoJS.AES.encrypt(results[0].name,'secret pswd');
+							var plans = results[0].plans.split(',');
+							var url_login = '/gym-snippets/userOptions?useremail='+encodeURIComponent(name) +
+							'&username=' + encodeURIComponent(username) +
+							'&gender=' + encodeURIComponent(results[0].gender);
+							if(Array.isArray(plans) ==false){
+								url_login += '&0' + encodeURIComponent(plans);
+							}
+							else{
+								for(var i=0;i<plans.length;i++){
+									url_login += '&' + i + '=' + encodeURIComponent(plans[i]);
+								}
+							}
+							res.redirect(url_login);
+
+					}
+
+				});
+				break;
+			}
+		}
+	}
+});
+
+
+app.get('/gym-snippets/userOptions',function(req,res){
+	var emailStr = new Array();
+	var u = req.url;
+	console.log('url recieved is: ',u);
+	var name;
+	var gender;
+	var mode = '';
+	if(u.split('?').length >1){
+		var params = u.split('?')[1].split('&');
+		for(var i=0;i<params.length;i++){
+			var key = params[i].split('=')[0];
+			var value = params[i].split('=')[1];
+			if(key == 'email' || key == 'useremail'){
 				console.log('inside man!');
 				name = params[i].split('=')[1];
 				name = decodeURIComponent(name);
@@ -676,6 +777,79 @@ app.get('/gym-snippets/userOptions',function(req,res){
 		}
 	});
 });
+
+
+app.get('/gym-css/close.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/close.png'));
+});
+
+app.get('/workout.mp4',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/workout.mp4'));
+});
+
+app.get('/gym-css/menu.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-css'+'/menu.png'));
+});
+
+app.get('/onlinePlan',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/online-plan.html'));
+});
+
+app.get('/onlineVideo',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/online-video.html'));
+});
+
+app.get('/gym-css/online-plan.css',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-css'+'/online-plan.css'));
+});
+
+app.get('/gym-css/online-video.css',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-css'+'/online-video.css'));
+});
+
+app.get('/intro',function(req,res){
+	res.render('intro',{
+		name: 'anand'
+	});
+});
+
+app.get('/gym-css/intro.css',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-css'+'/intro.css'));
+});
+
+app.get('/gym-images/fp.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/fp.png'));
+});
+
+app.get('/gym-images/sp.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/sp.png'));
+});
+
+app.get('/gym-images/thirdp.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/thirdp.png'));
+});
+
+app.get('/gym-images/fourthp.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/fourthp.png'));
+});
+
+app.get('/gym-images/fifthp.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/fifthp.png'));
+});
+
+app.get('/gym-images/sixthp.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/sixthp.png'));
+});
+
+app.get('/gym-images/seventhp.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images/seventhp.png'));
+});
+
+app.get('/gym-images/eigthp.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/eigthp.png'));
+});
+
+
 
 //post methods here....
 
@@ -854,7 +1028,7 @@ app.post('/payment', function(req, res){
 				gender = results[0].gender;
 				console.log('name: ',nameENC);
 				nameENC = CryptoJS.AES.encrypt(nameENC,'secret pswd');
-				var redirectURL = 'http://localhost:5000/index?username=' + encodeURIComponent(nameENC) + '&gender=' + encodeURIComponent(gender) + '&useremail=' + encodeURIComponent(CryptoJS.AES.encrypt(req.body.stripeEmail,'secret pswd'));
+				var redirectURL = 'http://localhost:5000/intro?username=' + encodeURIComponent(nameENC) + '&gender=' + encodeURIComponent(gender) + '&useremail=' + encodeURIComponent(CryptoJS.AES.encrypt(req.body.stripeEmail,'secret pswd'));
 				for(var i=0;i<global.plans.length;i++){
 					redirectURL += '&' + i + '=' + global.plans[i];
 				}
@@ -1039,6 +1213,7 @@ app.post('/register',function(request,response){
   }
 });
 
+
 app.post('/login',function(request,response){
 	var email = request.body.email;
 	var pswd = request.body.pswd;
@@ -1051,7 +1226,8 @@ app.post('/login',function(request,response){
 	if(email && pswd){
 		connection.query('SELECT * FROM gym_candidate WHERE email = ?',[email],function(errors,results,fields){
 			console.log('results = ',results);
-			if(results[0].payment_done == true){
+			if(results[0].payment_done == true || results[0].payment_done == 'true'){
+				console.log('before if: ',CryptoJS.AES.decrypt(results[0].pswd,'form').toString(CryptoJS.enc.Utf8));
 				if(CryptoJS.AES.decrypt(results[0].pswd,'form').toString(CryptoJS.enc.Utf8) == pswd){
 					console.log('successfully logged in!');
 					email = CryptoJS.AES.encrypt(email,'secret pswd');

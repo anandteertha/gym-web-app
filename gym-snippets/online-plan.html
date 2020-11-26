@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>GOLD GYM</title>
+	<link rel="stylesheet" href="../gym-css/bootstrap.min.css">
+	<link rel="stylesheet" href="../gym-css/gym-css.css">
+	<link rel="stylesheet" href="../gym-css/online-plan.css">
+	<link rel="icon" href='/gym-images/log.png'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+<style media="screen">
+.toggle{
+	position: relative;
+	width: 60px;
+	height: 60px;
+	background-image: url("../gym-css/menu.png");
+	background-repeat: no-repeat;
+	background-size: 30px;
+	background-position: center;
+	cursor: pointer;
+}
+.toggle.active{
+	background-image: url("../gym-css/close.png");
+	background-repeat: no-repeat;
+	background-size: 25px;
+	background-position: center;
+	cursor: pointer;
+}
+</style>
+<body>
+	<div class="menu">
+		<ul>
+			<li><a class="nav-link" id="home" onclick="toggleMenu();">Home</a></li>
+			<li><a class="nav-link" id='aboutus' onclick="toggleMenu();">About Us</a></li>
+			<li><a class="nav-link" id="gymEquipments" onclick="toggleMenu();">Equipments</a></li>
+			<li><a class="nav-link" id="plans" onclick="toggleMenu();">Plans</a></li>
+			<script type="text/javascript">
+				document.getElementById('home').href = window.location.toString().replace('onlinePlan','home');
+				document.getElementById('aboutus').href = window.location.toString().replace('onlinePlan','aboutUs');
+				document.getElementById('gymEquipments').href = window.location.toString().replace('onlinePlan','gym-snippets/gym-equipments');
+				document.getElementById('plans').href = window.location.toString().replace('onlinePlan','gym-snippets/userOptionss');
+
+			</script>
+		</ul>
+	</div>
+	<section class="banner">
+		<header>
+			<h2 class="logo">Online <span>Program</span></h2>
+			<div class="toggle " onclick="toggleMenu();"></div>
+		</header>
+		<video src="workout.mp4" type="video/mp4" muted loop  autoplay></video>
+		<div class="overlay"></div>
+		<div class="text">
+			<h2>Be Stronger</h2>
+			<h3>Never Give Up</h3><br><br><br>
+			<p>
+
+				Intimidated by the gym? We totally get it. The good news is that you can absolutely stay within your comfort zone and still stay fit. Daily Burn is your one-stop cyber-shop to 30-minute workouts you can do right at home! We love the variety of routines to experiment with almost as much as we admire the Daily Burn community. Members enjoy an on-demand library of more than 150 workouts — from yoga and cardio to strength- and body-training.
+			</p><br><br><br>
+			<a href="onlineVideo">Start hustling..</a>
+		</div>
+	</section>
+
+	<script type="text/javascript">
+		function toggleMenu(){
+			var menuToggle = document.querySelector(".toggle");
+			menuToggle.classList.toggle("active");
+			var banner = document.querySelector(".banner");
+			banner.classList.toggle("active");
+		}
+	</script>
+
+
+	<script src="../gym-js/jquery-3.5.1.min.js"></script>
+	<script src="../gym-js/bootstrap.min.js"></script>
+
+</body>
+</html>

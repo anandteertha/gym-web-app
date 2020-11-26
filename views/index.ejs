@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="gym-css/gym-css.css">
 	<link rel="icon" href='/gym-images/log.png'>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="/gym-js/auth.js" charset="utf-8"></script>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<style media="screen">
@@ -161,7 +162,7 @@
 								<% } %>
 								<% if(modeArray[i] =='online'){ %>
 									<li class="nav-item">
-										<form action="/online" method="get" >
+										<form action="/onlinePlan" method="get" >
 											<input type="hidden" name="email" id="emailid3" value="">
 											<script type="text/javascript">document.getElementById('emailid3').value = localStorage.email</script>
 											<input id="aboutUs_ID" type="submit" class="nav-link" value="Online">
@@ -321,6 +322,7 @@
 	<script src="gym-js/jquery-3.5.1.min.js"></script>
 	<script src="gym-js/bootstrap.min.js"></script>
 	<script>
+		
 		var slideIndex = 1;
 		showSlides(slideIndex);
 
@@ -399,10 +401,10 @@
 			window.location = 'http://localhost:5000/gym-snippets/loginform.html';
 		}
 		function displayInvoice(){
-			alert(window.location);
+			//alert(window.location);
 			var url = window.location.toString();
 			url = url.replace('index','invoice');
-			alert(url);
+			//alert(url);
 			window.location = url;
 		}
 	</script>

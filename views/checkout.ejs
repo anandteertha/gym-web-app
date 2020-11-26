@@ -6,6 +6,8 @@
 	body{
 		text-align: center;
 		background-image: linear-gradient(to right, grey , black);
+		color: white;
+		margin: 30em;
 	}
 </style>
 <body>
@@ -15,6 +17,7 @@
 		src="//checkout.stripe.com/v2/checkout.js"
 		class="stripe-button"
 		data-key="<%= key %>"
+		data-email = 'anand'
 		data-amount="<%= amount %>"
 		data-currency="inr"
 		data-name="GOLD GYM"
