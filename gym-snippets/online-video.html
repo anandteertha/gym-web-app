@@ -15,12 +15,18 @@
 	<div class="con banner">
 		<div class="menu">
 			<ul>
-				<li><a class="nav-link" href="gym-main.html" onclick="toggleMenu();">Home</a></li>
-				<li><a class="nav-link" href="gym-aboutus.html" onclick="toggleMenu();">About Us</a></li>
-				<li><a class="nav-link" href="gym-equipments.html" onclick="toggleMenu();">Equipments</a></li>
-				<li><a class="nav-link" href="#" onclick="toggleMenu();">Trainers</a></li>
-				<li><a class="nav-link" href="#" onclick="toggleMenu();">Branches</a></li>
+				<li><a class="nav-link"id="home"  onclick="toggleMenu();">Home</a></li>
+				<li><a class="nav-link" id="aboutus"  onclick="toggleMenu();">About Us</a></li>
+				<li><a class="nav-link" id="gymEquipments" onclick="toggleMenu();">Equipments</a></li>
+				<li><a class="nav-link" id="plans"  onclick="toggleMenu();">Plans</a></li>
 
+				<script type="text/javascript">
+					document.getElementById('home').href = window.location.toString().replace('onlineVideo','home');
+					document.getElementById('aboutus').href = window.location.toString().replace('onlineVideo','aboutUs');
+					document.getElementById('gymEquipments').href = window.location.toString().replace('onlineVideo','gym-snippets/gym-equipments');
+					document.getElementById('plans').href = window.location.toString().replace('onlineVideo','gym-snippets/userOptionss');
+
+				</script>
 			</ul>
 		</div>
 		<section class="">

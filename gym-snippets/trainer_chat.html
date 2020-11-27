@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>trainer chat</title>
+  </head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/gym-css/gym-css.css">
+  <link rel="stylesheet" href="tt.css">
+  <link rel="icon" href='/gym-images/log.png'>
+  <script src = "/socket.io/socket.io.js"></script>
+  <body>
+    <div class="chat_box" id="chatBox">
+      <div class="nav_chat" id="navChat">
+        Chat Box
+      </div>
+      <div id="SnR" class="SnR">
+
+      </div>
+    </div>
+    <div class="box" id="box">
+      <input id="msgBox" type="text"  name="" value="">
+      <i id="sendBtn" class="fa fa-send-o" style="font-size:25px;color:#009879"></i>
+    </div>
+    <script type="text/javascript">
+      var sendBtn = document.getElementById('sendBtn');
+      var snr = document.getElementById('SnR');
+      sendBtn.addEventListener('click',function(e){
+        //console.log(e);
+        var data = document.getElementById('msgBox');
+        var send = document.createElement('div');
+        send.setAttribute('id','send');
+        send.innerHTML = data.value;
+        var br = document.createElement('br');
+        snr.appendChild(send);
+        snr.appendChild(br);
+        var br3 = document.createElement('br');
+        snr.appendChild(br3);
+        var br4 = document.createElement('br');
+        snr.appendChild(br4);
+        socket.emit('send',data.value);
+        data.value = '';
+      });
+
+      var socket = io();
+      socket.on('recieve',function(data){
+        var recieve = document.createElement('div');
+        recieve.setAttribute('id','recieve');
+        recieve.innerHTML = data;
+        var br = document.createElement('br');
+        snr.appendChild(recieve);
+        snr.appendChild(br);
+        var br1 = document.createElement('br');
+        snr.appendChild(br1);
+        var br2 = document.createElement('br');
+        snr.appendChild(br2);
+      });
+    </script>
+  </body>
+</html>

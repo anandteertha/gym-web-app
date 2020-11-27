@@ -10,7 +10,7 @@ var path = require('path');
 var nodemailer = require('nodemailer');
 var fs = require('fs');
 var CryptoJS = require('crypto-js');
-
+var io = require('socket.io')(http);
 
 
 const stripePublicKey = 'pk_test_51HlziYD5Z2NiGnWqttUGOL6aKI2UsJGbtugSPS8FVTsi1xff8AlL6MyTE5i2N8wRYIuYpSuTzyuzxND2D8X64EEd00RUkYm19U';
@@ -807,6 +807,18 @@ app.get('/gym-css/online-video.css',function(req,res){
 	res.sendFile(path.join(__dirname+'/gym-css'+'/online-video.css'));
 });
 
+app.get('/offlinePlan',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/offline-plan.html'));
+});
+
+app.get('/offline-bg.jpg',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/offline-bg.jpg'));
+});
+
+app.get('/offline-plan.css',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-css'+'/offline-plan.css'));
+});
+
 app.get('/intro',function(req,res){
 	res.render('intro',{
 		name: 'anand'
@@ -849,7 +861,25 @@ app.get('/gym-images/eigthp.png',function(req,res){
 	res.sendFile(path.join(__dirname+'/gym-images'+'/eigthp.png'));
 });
 
+app.get('/gym.jpg',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/gym-tt.jpg'));
+});
 
+app.get('/tt.css',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-css'+'/tt.css'));
+});
+
+app.get('/tt',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/tt.html'));
+});
+
+app.get('/trainerChat',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-snippets'+'/trainer_chat.html'));
+});
+
+app.get('/chat.png',function(req,res){
+	res.sendFile(path.join(__dirname+'/gym-images'+'/chat.png'));
+});
 
 //post methods here....
 
@@ -1326,6 +1356,17 @@ app.post('/register/update',function(request,response){
     response.send('PLEASE ENTER THE REQUIRED CREDENTIALS...');
   }
 });
+
+//socket connection and events here...
+
+io.on('connection',function(socket){
+	socket.on('send',function(data){
+		socket.broadcast.emit("recieve", data);
+	});
+});
+
+
+
 
 //http listen on port 4000...
 

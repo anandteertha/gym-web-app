@@ -1,0 +1,156 @@
+* {
+    font-family: sans-serif; /* Change your font family */
+  }
+
+  body{
+      padding-top: 100px;
+      background: url(https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80);
+      background-repeat: no-repeat;
+      background-size: cover;
+  }
+
+  .content-table {
+    border-collapse: collapse;
+    margin: auto;
+    padding-top: 100px;
+    font-size: 0.9em;
+    min-width: 700px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+  }
+
+  .content-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .content-table th,
+  .content-table td {
+    padding: 12px 15px;
+  }
+
+  .content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .content-table tbody tr{
+    background-color: #f3f3f3;
+  }
+
+  .content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+
+  /* .content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+  }
+   */
+   /* :nth-of-type(even)  */
+
+
+   #chatBox{
+     box-sizing: border-box;
+     /*background-color: #009879;*/
+     background-color: white;
+     border: 2px solid black;
+     width: 23em;
+     height: 16em;
+     float: right;
+     margin-bottom: 0.5em;
+     margin-right: 0.5em;
+     clear: right;
+     line-height:30px;
+     float:right;
+     clear:right;
+     overflow-y: auto;
+     background-image: url('chat.png');
+     background-size: contain;
+   }
+
+   #SnR{
+     overflow: auto;
+     box-sizing: border-box;
+     width: 21em;
+     height: 12em;
+   }
+
+   #navChat{
+     background-color: #009879;
+     box-sizing: border-box;
+     width: 22.7em;
+     height: 3em;
+     text-align: center;
+     color: white;
+     font-family: "Comic Sans MS", cursive, sans-serif;
+     padding-top: 0.5em;
+   }
+
+   #msgBox{
+     box-sizing: border-box;
+     padding-bottom: 0.5em;
+     padding-left: 1em;
+     width: 21em;
+     position: absolute;
+     align-items: center;
+     height: 3em;
+     direction: ltr;
+     border-radius: 0.5em;
+     clear: right;
+   }
+   #box{
+     height: 4em;
+     width: 23em;
+     position:relative;
+     direction: rtl;
+     float: right;
+     box-sizing: border-box;
+     float:right;
+     clear:right;
+     margin-right: 1em;
+
+   }
+
+   #sendBtn{
+     position:absolute;
+     padding-right: 1em;
+     float: right;
+     padding-top: 0.3em;
+   }
+
+   #send{
+    position:absolute;
+    background-color: #009879;
+    margin: 1em;
+    padding: 0.5em;
+    width: 20em;
+    height: 3em;
+    text-align: right;
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    float: right;
+    clear: right;
+    opacity: 0.8;
+    border-radius: 1em;
+   }
+
+   #recieve{
+     position:absolute;
+     background-color: #009879;
+     margin: 1em;
+     padding: 0.5em;
+     width: 20em;
+     height: 3em;
+     text-align: left;
+     color: white;
+     font-family: "Comic Sans MS", cursive, sans-serif;
+     float: right;
+     clear: right;
+     border-radius: 1em;
+   }
+r-radius: 1em;
+   }
