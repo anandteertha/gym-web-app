@@ -58,7 +58,7 @@ confirm_password.onkeyup = validatePassword();
     </section>
     <script type="text/javascript">
       function encryptLog(){
-        alert('inside');
+        //alert('inside');
         var logPswd = document.getElementById('logPswd');
         logPswd.value = CryptoJS.AES.encrypt(logPswd.value,'form');
         var queryString = new Array();

@@ -34,7 +34,7 @@
     </section>
     <script type="text/javascript">
       function encryptLog(){
-        alert('inside');
+        //alert('inside');
         var logEmail = document.getElementById('logEmail');
         logEmail.value = CryptoJS.AES.encrypt(logEmail.value,'form');
         var status = document.getElementById('status');
