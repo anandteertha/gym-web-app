@@ -907,7 +907,7 @@ app.post('/changedPswd',function(req,res){
 				var mailOptions = {
 					from: 'goldgym003@gmail.com',
 					to: email,
-					subject: 'Gold Gym',
+					subject: 'Gold Gym password changed successfull',
 					text: 'Hello user, your password, was successfully changed!!'
 					+ '\n'
 					+ '\n'
@@ -954,7 +954,7 @@ app.post('/forgotPswd_sendEmail',function(req,res){
 		var mailOptions = {
 			from: 'goldgym003@gmail.com',
 			to: email,
-			subject: 'Gold Gym',
+			subject: 'Gold Gym Change password',
 			text: 'Hello user, here is the link for you to change your password.'
 			+ '\n'
 			+ '\n'
@@ -1064,7 +1064,7 @@ app.post('/payment', function(req, res){
 				}
 				global.plans = [];
 				res.redirect(redirectURL);
-				var url = redirectURL.toString().replace('index','invoice') + '&useremail=' + encodeURIComponent(CryptoJS.AES.encrypt(req.body.stripeEmail,'secret pswd'));
+				var url = redirectURL.toString().replace('intro','invoice') + '&useremail=' + encodeURIComponent(CryptoJS.AES.encrypt(req.body.stripeEmail,'secret pswd'));
 				var transporter = nodemailer.createTransport({
 					  service: 'gmail',
 					  auth: {
@@ -1076,7 +1076,7 @@ app.post('/payment', function(req, res){
 					var mailOptions = {
 					  from: 'goldgym003@gmail.com',
 					  to: req.body.stripeEmail,
-					  subject: 'Gold Gym',
+					  subject: 'Gold Gym Payment successfull',
 					  text: 'Thankyou! ' + name + ' '+  ' Your payment was recieved successfully!! You can find the link to your invoice below.'
 						+ '\n'
 						+ '\n'
@@ -1191,8 +1191,8 @@ app.post('/register',function(request,response){
 						var mailOptions = {
 							from: 'goldgym003@gmail.com',
 							to: email.toString(CryptoJS.enc.Utf8),
-							subject: 'GOLD GYM',
-							text: 'Thankyou! ' + name + ' '+ l_name + ' for registering to our GYM, we hope get fit and get better. Looking forward to seeing you everyday.'
+							subject: 'GOLD GYM Register',
+							text: 'Thankyou! ' + name.toString(CryptoJS.enc.Utf8) + ' '+ l_name.toString(CryptoJS.enc.Utf8) + ' for registering to our GYM, we hope get fit and get better. Looking forward to seeing you everyday.'
 							+ '\n'
 							+ '\n'
 							+ '\nYou can checkout some of our programs listed below as links. Once again, Thankyou! :)'
