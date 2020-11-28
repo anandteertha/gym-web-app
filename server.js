@@ -1117,130 +1117,136 @@ app.post('/register',function(request,response){
   var number = request.body.tel;
 	var plan =request.body.plans;
 	console.log('plans:- ',plan);
-	name = CryptoJS.AES.decrypt(name,'form');
-	l_name = CryptoJS.AES.decrypt(l_name,'form');
-	email = CryptoJS.AES.decrypt(email,'form');
-	//number = CryptoJS.AES.decrypt(number,'form').toString(CryptoJS.enc.Utf8);
-	//number = Number(number);
-  var tmp = {
-    name: name.toString(CryptoJS.enc.Utf8),
-    pswd: pswd,
-    l_name: l_name.toString(CryptoJS.enc.Utf8),
-    gender: gender,
-    email: email.toString(CryptoJS.enc.Utf8),
-		number: Number(number),
-		payment_done: 'false'
-  };
-	global.gender_ = gender;
-	//console.log('stripe.charges: ',stripe.charges);
+	if(plan!== undefined){
+		name = CryptoJS.AES.decrypt(name,'form');
+		l_name = CryptoJS.AES.decrypt(l_name,'form');
+		email = CryptoJS.AES.decrypt(email,'form');
+		//number = CryptoJS.AES.decrypt(number,'form').toString(CryptoJS.enc.Utf8);
+		//number = Number(number);
+		var tmp = {
+			name: name.toString(CryptoJS.enc.Utf8),
+			pswd: pswd,
+			l_name: l_name.toString(CryptoJS.enc.Utf8),
+			gender: gender,
+			email: email.toString(CryptoJS.enc.Utf8),
+			number: Number(number),
+			payment_done: 'false'
+		};
+		global.gender_ = gender;
+		//console.log('stripe.charges: ',stripe.charges);
 
-	console.log('tmp recieved is: ',tmp);
-  if(email && pswd && number){
-    connection.query('INSERT INTO gym_candidate SET ?',tmp,function(errors,results,fields){
-      if(errors){
-        console.log('error while inserting..');
-        return;
-      }
-      else{
-				var transporter = nodemailer.createTransport({
-					  service: 'gmail',
-					  auth: {
-					    user: 'goldgym003@gmail.com',
-					    pass: 'gold-gym-003-@@'
-					  }
-					});
-					var onlineProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
-					var offlineProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
-					var trainerProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
-					var encodedEmail = CryptoJS.AES.encrypt(email, "secret pswd");
+		console.log('tmp recieved is: ',tmp);
+		if(email && pswd && number){
+			connection.query('INSERT INTO gym_candidate SET ?',tmp,function(errors,results,fields){
+				if(errors){
+					console.log('error while inserting..');
+					return;
+				}
+				else{
+					var transporter = nodemailer.createTransport({
+							service: 'gmail',
+							auth: {
+								user: 'goldgym003@gmail.com',
+								pass: 'gold-gym-003-@@'
+							}
+						});
+						var onlineProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+						var offlineProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+						var trainerProgram = 'http://localhost:5000/gym-snippets/userOptions.html';
+						var encodedEmail = CryptoJS.AES.encrypt(email, "secret pswd");
 
-					var decrypted = CryptoJS.AES.decrypt(encodedEmail, "secret pswd");
+						var decrypted = CryptoJS.AES.decrypt(encodedEmail, "secret pswd");
 
-					var url = 'http://localhost:5000/checkout?useremail='+ encodeURIComponent(encodedEmail);
-					if(Array.isArray(plan) == false){
-						url += '&' + 0 + '=' + encodeURIComponent(plan);
-					}
-					else{
-						for(var i=0;i<plan.length;i++){
-							url +=  '&' + i + '=' + encodeURIComponent(plan[i]);
-						}
-					}
-					console.log('url now is: ',url);
-					response.redirect(url);
-					var pathOnlineProgram = '/gym-web-app' + '/gym-images' + '/m.jpg';
-					var pathLogo ='/gym-web-app' + '/gym-images' + '/log.png';
-					console.log('pathogo: ',pathLogo);
-					var emailBody = ''
-					fs.readFile(pathOnlineProgram,function(error,data){
-						if(error){
-							console.log('some error happened..');
+						var url = 'http://localhost:5000/checkout?useremail='+ encodeURIComponent(encodedEmail);
+						if(Array.isArray(plan) == false){
+							url += '&' + 0 + '=' + encodeURIComponent(plan);
 						}
 						else{
-							request.session.image1 = data;
+							for(var i=0;i<plan.length;i++){
+								url +=  '&' + i + '=' + encodeURIComponent(plan[i]);
+							}
 						}
-					});
-					fs.readFile(pathLogo,function(error,data){
-						if(error){
-							console.log('some error happened..');
-						}
-						else{
-							request.session.image2 = data;
-						}
-					});
-					var mailOptions = {
-					  from: 'goldgym003@gmail.com',
-					  to: email.toString(CryptoJS.enc.Utf8),
-					  subject: 'GOLD GYM',
-					  text: 'Thankyou! ' + name + ' '+ l_name + ' for registering to our GYM, we hope get fit and get better. Looking forward to seeing you everyday.'
-						+ '\n'
-						+ '\n'
-						+ '\nYou can checkout some of our programs listed below as links. Once again, Thankyou! :)'
-						+ '\n'
-						+ '\n'
-						+ '\n 1) online program - '+ onlineProgram
-						+ '\n'
-						+ '\n'
-						+ '\n 2) offline program - '+ offlineProgram
-						+ '\n'
-						+ '\n'
-						+ '\n 3) trainer program - '+ trainerProgram
-						+ '\n'
-						+ '\n'
-						+ '\n',
-						attachments: [
-						{
-							filename: 'm.jpg' ,
-							contentType:  'image/jpg',
-		          path: pathOnlineProgram
-	      		},
-						{
-							filename: 'log.png' ,
-							contentType:  'image/png',
-		          path: pathLogo
-	      		},
-						{
-							filename: 'aboutus-1300.jpg' ,
-							contentType:  'image/png',
-		          path: '/gym-web-app' + '/gym-images' + '/aboutus-1300.jpg'
-						}
+						console.log('url now is: ',url);
+						response.redirect(url);
+						var pathOnlineProgram = '/gym-web-app' + '/gym-images' + '/m.jpg';
+						var pathLogo ='/gym-web-app' + '/gym-images' + '/log.png';
+						console.log('pathogo: ',pathLogo);
+						var emailBody = ''
+						fs.readFile(pathOnlineProgram,function(error,data){
+							if(error){
+								console.log('some error happened..');
+							}
+							else{
+								request.session.image1 = data;
+							}
+						});
+						fs.readFile(pathLogo,function(error,data){
+							if(error){
+								console.log('some error happened..');
+							}
+							else{
+								request.session.image2 = data;
+							}
+						});
+						var mailOptions = {
+							from: 'goldgym003@gmail.com',
+							to: email.toString(CryptoJS.enc.Utf8),
+							subject: 'GOLD GYM',
+							text: 'Thankyou! ' + name + ' '+ l_name + ' for registering to our GYM, we hope get fit and get better. Looking forward to seeing you everyday.'
+							+ '\n'
+							+ '\n'
+							+ '\nYou can checkout some of our programs listed below as links. Once again, Thankyou! :)'
+							+ '\n'
+							+ '\n'
+							+ '\n 1) online program - '+ onlineProgram
+							+ '\n'
+							+ '\n'
+							+ '\n 2) offline program - '+ offlineProgram
+							+ '\n'
+							+ '\n'
+							+ '\n 3) trainer program - '+ trainerProgram
+							+ '\n'
+							+ '\n'
+							+ '\n',
+							attachments: [
+							{
+								filename: 'm.jpg' ,
+								contentType:  'image/jpg',
+								path: pathOnlineProgram
+							},
+							{
+								filename: 'log.png' ,
+								contentType:  'image/png',
+								path: pathLogo
+							},
+							{
+								filename: 'aboutus-1300.jpg' ,
+								contentType:  'image/png',
+								path: '/gym-web-app' + '/gym-images' + '/aboutus-1300.jpg'
+							}
 
-						]
-					};
+							]
+						};
 
-					transporter.sendMail(mailOptions, function(error, info){
-					  if (error) {
-					    console.log(error);
-					  } else {
-					    console.log('Email sent: ' + info.response);
-					  }
-					});
+						transporter.sendMail(mailOptions, function(error, info){
+							if (error) {
+								console.log(error);
+							} else {
+								console.log('Email sent: ' + info.response);
+							}
+						});
 
-      }
-    });
-  }
-  else{
-    response.send('PLEASE ENTER THE REQUIRED CREDENTIALS...');
-  }
+				}
+			});
+		}
+		else{
+			response.send('PLEASE ENTER THE REQUIRED CREDENTIALS...');
+		}
+	}
+	else{
+		var redirectURL = 'http://localhost:5000/intro?username=' + encodeURIComponent(name) + '&gender=' + encodeURIComponent(gender) + '&useremail=' + encodeURIComponent(email);
+		response.send('select plans!');
+	}
 });
 
 
