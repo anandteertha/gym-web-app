@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="icon" href='/gym-images/log.png'>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
     <script src="/gym-js/auth.js" charset="utf-8"></script>
 </head>
 
@@ -38,13 +39,13 @@
         </div>
     </section>
     <script type="text/javascript">
-      function encryptLog(){
-        //alert('inside');
-        var logEmail = document.getElementById('logEmail');
-        logEmail.value = CryptoJS.AES.encrypt(logEmail.value,'form');
-        var logPswd = document.getElementById('logPswd');
-        logPswd.value = CryptoJS.AES.encrypt(logPswd.value,'form');
-      }
+        function encryptLog() {
+            //alert('inside');
+            var logEmail = document.getElementById('logEmail');
+            logEmail.value = CryptoJS.AES.encrypt(logEmail.value, 'form');
+            var logPswd = document.getElementById('logPswd');
+            logPswd.value = CryptoJS.AES.encrypt(logPswd.value, 'form');
+        }
     </script>
 </body>
 
