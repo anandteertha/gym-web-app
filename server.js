@@ -32,7 +32,7 @@ app.set('view engine', 'ejs')
 var db_config = {
 	host     : 'localhost',
 	user     : 'root',
-	password : 'helloWorld',
+	password : 'anantdf123099#qcvbnAS!!++#',
 	database : 'wdl'
 };
 var connection = mysql.createPool(db_config);
@@ -870,7 +870,56 @@ app.get('/tt.css',function(req,res){
 });
 
 app.get('/tt',function(req,res){
-	res.sendFile(path.join(__dirname+'/gym-snippets'+'/tt.html'));
+	//res.sendFile(path.join(__dirname+'/gym-snippets'+'/tt.html'));
+	var emailStr = new Array();
+	var u = req.url;
+	console.log('url recieved is: ',u);
+	var name;
+	var gender;
+	var mode = '';
+	if(u.split('?').length >1){
+		var params = u.split('?')[1].split('&');
+		for(var i=0;i<params.length;i++){
+			var key = params[i].split('=')[0];
+			var value = params[i].split('=')[1];
+			if(key == 'email' || key == 'useremail'){
+				console.log('inside man!');
+				name = params[i].split('=')[1];
+				name = decodeURIComponent(name);
+				//console.log('before email = ',email);
+				name = CryptoJS.AES.decrypt(name,'secret pswd').toString(CryptoJS.enc.Utf8);
+				console.log(name);
+				break;
+			}
+		}
+	}
+	console.log('name: ',name);
+	connection.query('select * from tt',function(error,results,fields){
+		if(error){
+			console.error('error happened while selecting from tt');
+			res.send('sorry some error occured in serevr..');
+		}
+		else{
+			var trainers = [];
+			var location = [];
+			var time = [];
+			var id = [];
+			if(results.length > 0 || results.length!== undefined){
+				for(var i=0;i<results.length;i++){
+					id.push(results[i].id);
+					trainers.push(results[i].Trainer);
+					location.push(results[i].location);
+					time.push(results[i].time);
+				}
+			}
+			res.render('tt',{
+				id: id,
+				Trainers: trainers,
+				location: location,
+				time: time
+			});
+		}
+	});
 });
 
 app.get('/trainerChat',function(req,res){
@@ -1362,6 +1411,29 @@ app.post('/register/update',function(request,response){
     response.send('PLEASE ENTER THE REQUIRED CREDENTIALS...');
   }
 });
+
+
+app.post('/addTrainer',function(req,res){
+	var tmp = {
+		Trainer: req.body.name,
+		location: req.body.location,
+		time: req.body.time
+	};
+	console.log('tmp: ',tmp);
+	if(req.body.name && req.body.time && req.body.location){
+		connection.query('insert into tt set ?',tmp,function(errors,results,fields){
+			if(errors){
+				console.log(errors);
+				res.send('error occured while inserting into database..');
+			}
+			else{
+				res.redirect('/trainerChat');
+			}
+		});
+	}
+});
+
+
 
 //socket connection and events here...
 

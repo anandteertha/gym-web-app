@@ -35,7 +35,7 @@ CREATE TABLE `gym_candidate` (
   `payment_done` varchar(10) NOT NULL,
   PRIMARY KEY (`gym_ID`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,35 @@ CREATE TABLE `gym_candidate` (
 
 LOCK TABLES `gym_candidate` WRITE;
 /*!40000 ALTER TABLE `gym_candidate` DISABLE KEYS */;
+INSERT INTO `gym_candidate` VALUES ('Anandteertha',1,'U2FsdGVkX19w9gtgyzjBFRWLeSz/jynepgNO+wTBoSk=','Rao','Male','anandteertha.ramesh18@siesgst.ac.in',9769298928,'online,offline,trainer',1902500,'true');
 /*!40000 ALTER TABLE `gym_candidate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tt`
+--
+
+DROP TABLE IF EXISTS `tt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tt` (
+  `Trainer` varchar(20) NOT NULL,
+  `location` varchar(45) NOT NULL,
+  `time` varchar(45) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) DEFAULT 'null',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tt`
+--
+
+LOCK TABLES `tt` WRITE;
+/*!40000 ALTER TABLE `tt` DISABLE KEYS */;
+INSERT INTO `tt` VALUES ('Anandteertha Rao','Airoli','9:16',1,'null'),('Atharva Vaidya','Airoli','15:20',2,'null');
+/*!40000 ALTER TABLE `tt` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -64,4 +92,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-28 12:22:13
+-- Dump completed on 2020-12-03 18:15:47
