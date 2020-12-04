@@ -32,7 +32,7 @@ app.set('view engine', 'ejs')
 var db_config = {
 	host     : 'localhost',
 	user     : 'root',
-	password : 'anantdf123099#qcvbnAS!!++#',
+	password : 'yahape apna database ka password likh!',
 	database : 'wdl'
 };
 var connection = mysql.createPool(db_config);
